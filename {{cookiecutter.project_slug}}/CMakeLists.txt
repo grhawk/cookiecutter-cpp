@@ -14,8 +14,10 @@ include(cmake/gtest.cmake)
 
 add_subdirectory(engine)
 add_subdirectory(sandbox)
-add_subdirectory(logging EXCLUDE_FROM_ALL)
 {% if cookiecutter.command_line_interface == 'CLI11' -%}
 add_subdirectory(libs/CLI11 EXCLUDE_FROM_ALL)
 {% endif %}
+{% if cookiecutter.logging_system == 'y' -%}
 add_subdirectory(libs/spdlog EXCLUDE_FROM_ALL)
+add_subdirectory(logging EXCLUDE_FROM_ALL)
+{% endif %}
