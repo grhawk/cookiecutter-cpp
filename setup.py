@@ -1,8 +1,9 @@
 # !/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup, find_packages
+
 setup(
-    name='cookiecutter-c++',
+    name='cookiecutter-cpp',
     packages=[],
     version='0.1.0',
     description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects',
@@ -12,7 +13,8 @@ setup(
     author_email='riccardo.petraglia@gmail.com',
     url='https://github.com/grhawk/cookiecutter-cpp.git',
     keywords=['cookiecutter', 'template', 'package', 'c++', 'cpp', 'gtest'],
-    #python_requires='>=3.6',
+    python_requires='>=3.6',
+    setup_requires=['wheel'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -28,4 +30,10 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',
     ],
+    # classifiers= [
+    #     "Development Status :: 3 - Alpha",
+    #     "Intended Audience :: Developers",
+    #     'License :: OSI Approved :: MIT License',
+    #     "Programming Language :: Python :: 3",
+    # ]
 )
