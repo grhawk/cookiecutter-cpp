@@ -5,6 +5,6 @@
 #ifndef {{cookiecutter.project_uppercase}}_{{cookiecutter.project_uppercase}}_H
 #define {{cookiecutter.project_uppercase}}_{{cookiecutter.project_uppercase}}_H
 
-#include "haribo/Application.h"
+#include "{{cookiecutter.project_slug}}/application.h"
 
 #endif //{{cookiecutter.project_uppercase}}_{{cookiecutter.project_uppercase}}_H

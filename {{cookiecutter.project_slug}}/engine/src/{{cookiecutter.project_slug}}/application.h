@@ -5,16 +5,15 @@
 #ifndef {{cookiecutter.project_uppercase}}_APPLICATION_H
 #define {{cookiecutter.project_uppercase}}_APPLICATION_H
 
-#include "Core.h"
+#include "core.h"
 
-namespace Haribo {
-    class HR_API Application {
-    public:
-        Application();
-        virtual ~Application();
-
-        void run();
-    };
+namespace {{cookiecutter.project_slug}} {
+  class HR_API Application {
+  public:
+      Application();
+      ~Application();
+      static int dummyFunction();
+  };
 }
 
 

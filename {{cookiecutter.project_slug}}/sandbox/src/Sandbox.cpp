@@ -2,9 +2,9 @@
 // Created by Petraglia Riccardo, INI-CLD-TCL on 24.05.21.
 //
 
-#include <Haribo.h>
+#include <{{cookiecutter.project_slug}}.h>
 
-class Sandbox : public Haribo::Application
+class Sandbox : public {{cookiecutter.project_slug}}::Application
 {
 public:
     Sandbox()= default;
