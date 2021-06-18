@@ -1,6 +1,6 @@
-======================
-Cookiecutter PyPackage
-======================
+================
+Cookiecutter C++ 
+================
 
 .. image:: https://pyup.io/repos/github/audreyfeldroy/cookiecutter-pypackage/shield.svg
     :target: https://pyup.io/repos/github/audreyfeldroy/cookiecutter-pypackage/
@@ -19,6 +19,13 @@ Cookiecutter_ template for a Python package.
 * GitHub repo: https://github.com/audreyfeldroy/cookiecutter-pypackage/
 * Documentation: https://cookiecutter-pypackage.readthedocs.io/
 * Free software: BSD license
+
+
+Credits
+-------
+This is basically a for from:
+https://cookiecutter.readthedocs.io/en/1.7.2/README.html
+
 
 Features
 --------
