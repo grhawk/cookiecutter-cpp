@@ -2,16 +2,17 @@
 
 from distutils.core import setup
 setup(
-    name='cookiecutter-pypackage',
+    name='cookiecutter-c++',
     packages=[],
     version='0.1.0',
-    description='Cookiecutter template for a Python package',
-    author='Audrey Roy Greenfeld',
+    description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects',
+    long_description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects. The template includes also GoogleTest examples and the possibility to embed a logging system.',
+    author='Riccardo Petraglia (forked from https://github.com/audreyr/cookiecutter-pypackage)',
     license='BSD',
-    author_email='aroy@alum.mit.edu',
-    url='https://github.com/audreyr/cookiecutter-pypackage',
-    keywords=['cookiecutter', 'template', 'package', ],
-    python_requires='>=3.6',
+    author_email='riccardo.petraglia@gmail.com',
+    url='https://github.com/grhawk/cookiecutter-cpp.git',
+    keywords=['cookiecutter', 'template', 'package', 'c++', 'cpp', 'gtest'],
+    #python_requires='>=3.6',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
