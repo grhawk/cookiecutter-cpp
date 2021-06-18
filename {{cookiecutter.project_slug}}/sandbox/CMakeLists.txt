@@ -1,6 +1,6 @@
 set(PROJECT ${CPACK_PROJECT_NAME}-sandbox)
 
-project(${PROJECT} VERSION 0.1.0)
+project(${PROJECT} VERSION {{cookiecutter.version}})
 
 add_subdirectory(tests)
 
