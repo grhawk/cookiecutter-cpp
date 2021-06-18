@@ -2,16 +2,27 @@ version: 2.1
 jobs:
     build_test:
         docker:
-            - image: circleci/python:3.6.4
+#            - image: circleci/python:3.6.4
+            - image: ubuntu:focal
         steps:
             - checkout  # checkout source code to working directory
             - run:
                   command: |  # create whl and use pipenv to install dependencies
-                      sudo apt-get -y install cmake build-essential
-                      python setup.py sdist bdist_wheel
-                      sudo pip install pipenv
+                      export DEBIAN_FRONTEND=noninteractive
+                      apt-get update -y && apt-get -y install software-properties-common
+                      add-apt-repository ppa:git-core/ppa -y
+                      apt-get update -y
+                      apt-get -y install build-essential wget python3 python3-pip git
+                      mkdir cmake && cd cmake && wget https://github.com/Kitware/CMake/releases/download/v3.18.5/cmake-3.18.5-Linux-x86_64.sh && \
+                                                chmod +x cmake-3.18.5-Linux-x86_64.sh && \
+                                                ./cmake-3.18.5-Linux-x86_64.sh --skip-license --prefix=/usr/local && cd ..
+                      pip3 install setuptools
+                      python3 setup.py sdist bdist_wheel
+                      pip3 install pipenv
                       pipenv install -r requirements_dev.txt
                       pipenv install pytest
+                      cmake --version
+                      ls -lrt
             - run:
                   command: |  # Run test suite
                       pipenv run pytest -sv
@@ -40,14 +51,11 @@ jobs:
 workflows:
     build_test_publish:
         jobs:
-            - build_test
             - test_pypi_publish:
-                  requires:
-                      - build_test
                   filters:
                       branches:
                           only:
-                              - develop
+                              - main
 #            - pypi_publish:
 #                  requires:
 #                      - build_test
