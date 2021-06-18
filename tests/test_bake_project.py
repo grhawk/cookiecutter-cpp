@@ -36,6 +36,12 @@ def bake_in_temp_dir(cookies, *args, **kwargs):
     result = cookies.bake(*args, **kwargs)
     try:
         yield result
+    except Exception as err:
+        import time
+        print("Error!\n" + str(err))
+        input("Press any key to delete the test folder...")
+        print("Use `-s` to stop the test here!")
+        raise
     finally:
         rmtree(str(result.project))
 
@@ -78,10 +84,9 @@ def test_bake_with_defaults(cookies):
         assert result.exception is None
 
         found_toplevel_files = [f.basename for f in result.project.listdir()]
-        assert 'setup.py' in found_toplevel_files
-        assert 'python_boilerplate' in found_toplevel_files
-        assert 'tox.ini' in found_toplevel_files
-        assert 'tests' in found_toplevel_files
+        assert 'CMakeLists.txt' in found_toplevel_files
+        assert '.gitignore' in found_toplevel_files
+        assert 'README.rst' in  found_toplevel_files
 
 
 def test_bake_and_run_tests(cookies):
