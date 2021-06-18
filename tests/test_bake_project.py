@@ -11,6 +11,12 @@ from click.testing import CliRunner
 
 import importlib
 
+def pytest_exception_interact(node, call, report):
+    if report.failed:
+        input("Press any key to delete the test folder...")
+        print("Use `-s` to stop the test here!")
+        raise call.excinfo
+
 
 @contextmanager
 def inside_dir(dirpath):
@@ -36,12 +42,6 @@ def bake_in_temp_dir(cookies, *args, **kwargs):
     result = cookies.bake(*args, **kwargs)
     try:
         yield result
-    except Exception as err:
-        import time
-        print("Error!\n" + str(err))
-        input("Press any key to delete the test folder...")
-        print("Use `-s` to stop the test here!")
-        raise
     finally:
         rmtree(str(result.project))
 
@@ -92,8 +92,18 @@ def test_bake_with_defaults(cookies):
 def test_bake_and_run_tests(cookies):
     with bake_in_temp_dir(cookies) as result:
         assert result.project.isdir()
-        run_inside_dir('python setup.py test', str(result.project)) == 0
+        build_and_test(result)
         print("test_bake_and_run_tests path", str(result.project))
+
+
+def build_and_test(result):
+    build_dir = str(result.project) + "/build"
+    assert run_inside_dir('mkdir build', str(result.project)) == 0
+    assert run_inside_dir('cmake ..', build_dir) == 0
+    assert run_inside_dir('cmake --build .', build_dir) == 0
+    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', build_dir) == 0
+    assert run_inside_dir('./sandbox/tests/cpp_boilerplate-sandbox-test', build_dir) == 0
+    assert run_inside_dir('./sandbox/cpp_boilerplate-sandbox', build_dir) == 0
 
 
 def test_bake_withspecialchars_and_run_tests(cookies):
@@ -103,7 +113,7 @@ def test_bake_withspecialchars_and_run_tests(cookies):
         extra_context={'full_name': 'name "quote" name'}
     ) as result:
         assert result.project.isdir()
-        run_inside_dir('python setup.py test', str(result.project)) == 0
+        build_and_test(result)
 
 
 def test_bake_with_apostrophe_and_run_tests(cookies):
@@ -113,7 +123,7 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
         extra_context={'full_name': "O'connor"}
     ) as result:
         assert result.project.isdir()
-        run_inside_dir('python setup.py test', str(result.project)) == 0
+        build_and_test(result)
 
 
 # def test_bake_and_run_travis_pypi_setup(cookies):
@@ -136,18 +146,18 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
 #         ) > min_size_of_encrypted_password
 
 
-def test_bake_without_travis_pypi_setup(cookies):
-    with bake_in_temp_dir(
-        cookies,
-        extra_context={'use_pypi_deployment_with_travis': 'n'}
-    ) as result:
-        result_travis_config = yaml.load(
-            result.project.join(".travis.yml").open(),
-            Loader=yaml.FullLoader
-        )
-        assert "deploy" not in result_travis_config
-        assert "python" == result_travis_config["language"]
-        # found_toplevel_files = [f.basename for f in result.project.listdir()]
+# def test_bake_without_travis_pypi_setup(cookies):
+#     with bake_in_temp_dir(
+#         cookies,
+#         extra_context={'use_pypi_deployment_with_travis': 'n'}
+#     ) as result:
+#         result_travis_config = yaml.load(
+#             result.project.join(".travis.yml").open(),
+#             Loader=yaml.FullLoader
+#         )
+#         assert "deploy" not in result_travis_config
+#         assert "python" == result_travis_config["language"]
+#         # found_toplevel_files = [f.basename for f in result.project.listdir()]
 
 
 def test_bake_without_author_file(cookies):
@@ -157,13 +167,13 @@ def test_bake_without_author_file(cookies):
     ) as result:
         found_toplevel_files = [f.basename for f in result.project.listdir()]
         assert 'AUTHORS.rst' not in found_toplevel_files
-        doc_files = [f.basename for f in result.project.join('docs').listdir()]
-        assert 'authors.rst' not in doc_files
+        # doc_files = [f.basename for f in result.project.join('docs').listdir()]
+        # assert 'authors.rst' not in doc_files
 
         # Assert there are no spaces in the toc tree
-        docs_index_path = result.project.join('docs/index.rst')
-        with open(str(docs_index_path)) as index_file:
-            assert 'contributing\n   history' in index_file.read()
+        # docs_index_path = result.project.join('docs/index.rst')
+        # with open(str(docs_index_path)) as index_file:
+        #     assert 'contributing\n   history' in index_file.read()
 
         # Check that
         manifest_path = result.project.join('MANIFEST.in')
@@ -175,11 +185,12 @@ def test_make_help(cookies):
     with bake_in_temp_dir(cookies) as result:
         # The supplied Makefile does not support win32
         if sys.platform != "win32":
+            build_and_test(result)
             output = check_output_inside_dir(
                 'make help',
-                str(result.project)
+                str(result.project) + "/build"
             )
-            assert b"check code coverage quickly with the default Python" in \
+            assert b"cpp_boilerplate-sandbox" in \
                 output
 
 
@@ -199,7 +210,6 @@ def test_bake_selecting_license(cookies):
             extra_context={'open_source_license': license}
         ) as result:
             assert target_string in result.project.join('LICENSE').read()
-            assert license in result.project.join('setup.py').read()
 
 
 def test_bake_not_open_source(cookies):
@@ -208,35 +218,8 @@ def test_bake_not_open_source(cookies):
         extra_context={'open_source_license': 'Not open source'}
     ) as result:
         found_toplevel_files = [f.basename for f in result.project.listdir()]
-        assert 'setup.py' in found_toplevel_files
         assert 'LICENSE' not in found_toplevel_files
         assert 'License' not in result.project.join('README.rst').read()
-
-
-def test_using_pytest(cookies):
-    with bake_in_temp_dir(
-        cookies,
-        extra_context={'use_pytest': 'y'}
-    ) as result:
-        assert result.project.isdir()
-        test_file_path = result.project.join(
-            'tests/test_python_boilerplate.py'
-        )
-        lines = test_file_path.readlines()
-        assert "import pytest" in ''.join(lines)
-        # Test the new pytest target
-        run_inside_dir('pytest', str(result.project)) == 0
-
-
-def test_not_using_pytest(cookies):
-    with bake_in_temp_dir(cookies) as result:
-        assert result.project.isdir()
-        test_file_path = result.project.join(
-            'tests/test_python_boilerplate.py'
-        )
-        lines = test_file_path.readlines()
-        assert "import unittest" in ''.join(lines)
-        assert "import pytest" not in ''.join(lines)
 
 
 # def test_project_with_hyphen_in_module_name(cookies):
@@ -263,76 +246,10 @@ def test_not_using_pytest(cookies):
 def test_bake_with_no_console_script(cookies):
     context = {'command_line_interface': "No command-line interface"}
     result = cookies.bake(extra_context=context)
-    project_path, project_slug, project_dir = project_info(result)
-    found_project_files = os.listdir(project_dir)
-    assert "cli.py" not in found_project_files
+    assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
 
-    setup_path = os.path.join(project_path, 'setup.py')
-    with open(setup_path, 'r') as setup_file:
-        assert 'entry_points' not in setup_file.read()
-
-
-def test_bake_with_console_script_files(cookies):
-    context = {'command_line_interface': 'click'}
+def test_bake_with_no_logging_system(cookies):
+    context = {'logging_system': 'n'}
     result = cookies.bake(extra_context=context)
-    project_path, project_slug, project_dir = project_info(result)
-    found_project_files = os.listdir(project_dir)
-    assert "cli.py" in found_project_files
-
-    setup_path = os.path.join(project_path, 'setup.py')
-    with open(setup_path, 'r') as setup_file:
-        assert 'entry_points' in setup_file.read()
-
-
-def test_bake_with_argparse_console_script_files(cookies):
-    context = {'command_line_interface': 'argparse'}
-    result = cookies.bake(extra_context=context)
-    project_path, project_slug, project_dir = project_info(result)
-    found_project_files = os.listdir(project_dir)
-    assert "cli.py" in found_project_files
-
-    setup_path = os.path.join(project_path, 'setup.py')
-    with open(setup_path, 'r') as setup_file:
-        assert 'entry_points' in setup_file.read()
-
-
-def test_bake_with_console_script_cli(cookies):
-    context = {'command_line_interface': 'click'}
-    result = cookies.bake(extra_context=context)
-    project_path, project_slug, project_dir = project_info(result)
-    module_path = os.path.join(project_dir, 'cli.py')
-    module_name = '.'.join([project_slug, 'cli'])
-    spec = importlib.util.spec_from_file_location(module_name, module_path)
-    cli = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(cli)
-    runner = CliRunner()
-    noarg_result = runner.invoke(cli.main)
-    assert noarg_result.exit_code == 0
-    noarg_output = ' '.join([
-        'Replace this message by putting your code into',
-        project_slug])
-    assert noarg_output in noarg_result.output
-    help_result = runner.invoke(cli.main, ['--help'])
-    assert help_result.exit_code == 0
-    assert 'Show this message' in help_result.output
-
-
-def test_bake_with_argparse_console_script_cli(cookies):
-    context = {'command_line_interface': 'argparse'}
-    result = cookies.bake(extra_context=context)
-    project_path, project_slug, project_dir = project_info(result)
-    module_path = os.path.join(project_dir, 'cli.py')
-    module_name = '.'.join([project_slug, 'cli'])
-    spec = importlib.util.spec_from_file_location(module_name, module_path)
-    cli = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(cli)
-    runner = CliRunner()
-    noarg_result = runner.invoke(cli.main)
-    assert noarg_result.exit_code == 0
-    noarg_output = ' '.join([
-        'Replace this message by putting your code into',
-        project_slug])
-    assert noarg_output in noarg_result.output
-    help_result = runner.invoke(cli.main, ['--help'])
-    assert help_result.exit_code == 0
-    assert 'Show this message' in help_result.output
+    assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
+    assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0

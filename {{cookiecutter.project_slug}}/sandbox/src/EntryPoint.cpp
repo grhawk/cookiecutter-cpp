@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 {
     {% if cookiecutter.logging_system == 'y' -%}logging::Log LOGGER = logging::Log();{% endif %}
 
-    std::string addToMessage = "CLI11 is not activated!";
+    std::string addToMessage = "It seems no console support has been activated!";
     {% if cookiecutter.command_line_interface == 'CLI11' -%}CLI::App cli{"App description"};
     cli.add_option("Add to message",
                    addToMessage,
