@@ -21,3 +21,8 @@ if __name__ == '__main__':
         import subprocess
         subprocess.call(('git', 'init'))
         subprocess.call(('git', 'submodule', 'add', 'git@github.com:CLIUtils/CLI11.git', 'libs/CLI11'))
+
+    if '{{ cookiecutter.logging_system }}' == 'y':
+        import subprocess
+        subprocess.call(('git', 'init'))
+        subprocess.call(('git', 'submodule', 'add', 'git@github.com:gabime/spdlog.git', 'libs/spdlog'))

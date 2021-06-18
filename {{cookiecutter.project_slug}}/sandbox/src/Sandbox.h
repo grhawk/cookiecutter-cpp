@@ -8,8 +8,10 @@ class Sandbox
 private:
     const char* p_message =
             {{cookiecutter.project_slug}}::Application::dummyFunction();
+    {{cookiecutter.project_slug}}::Application app;
 public:
-    Sandbox() = default;
+    Sandbox()
+            : app({{cookiecutter.project_slug}}::Application()) {}
     ~Sandbox() = default;
     const char* message();
 };

@@ -1,11 +1,14 @@
 
 {% if cookiecutter.command_line_interface == 'CLI11' -%}#include <CLI/CLI.hpp>{% endif %}
+{% if cookiecutter.logging_system == 'y' -%}#include <Log.h>{% endif %}
 #include <iostream>
 
 #include "Sandbox.h"
 
 int main(int argc, char* argv[])
 {
+    {% if cookiecutter.logging_system == 'y' -%}logging::Log LOGGER = logging::Log();{% endif %}
+
     std::string addToMessage = "CLI11 is not activated!";
     {% if cookiecutter.command_line_interface == 'CLI11' -%}CLI::App cli{"App description"};
     cli.add_option("Add to message",
