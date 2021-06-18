@@ -1,9 +1,6 @@
-//
-// Created by Petraglia Riccardo, INI-CLD-TCL on 24.05.21.
-//
+#include <iostream>
 
 #include "application.h"
-#include <iostream>
 
 namespace {{cookiecutter.project_slug}} {
 
@@ -12,9 +9,9 @@ namespace {{cookiecutter.project_slug}} {
     std::cout << "Starting application!" << std::endl;
   }
 
-  int application::dummyFunction()
+  const char* Application::dummyFunction()
   {
-    return 0;
+    return "Hello!";
   }
 
   Application::~Application() = default;

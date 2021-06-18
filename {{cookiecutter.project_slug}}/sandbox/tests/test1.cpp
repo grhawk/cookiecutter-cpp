@@ -1,13 +1,12 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-err58-cpp"
 #include<gtest/gtest.h>
 
-//#include<example.h>
-//
-//TEST(Example, ExampleTest){
-//  ASSERT_STREQ(sayHello(), "Hello!");
-//}
-//
-//TEST(Example, ExpectedToFail){
-//  const char* res = sayHello();
-//  const char* exp = res;
-//  ASSERT_EQ(res, exp);
-//}
+#include<Sandbox.h>
+
+TEST(Example, ExampleTest){
+Sandbox sandbox = Sandbox();
+ASSERT_STREQ(sandbox.message(), "Hello!");
+}
+
+#pragma clang diagnostic pop

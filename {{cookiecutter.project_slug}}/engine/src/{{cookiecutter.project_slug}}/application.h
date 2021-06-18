@@ -12,7 +12,7 @@ namespace {{cookiecutter.project_slug}} {
   public:
       Application();
       ~Application();
-      static int dummyFunction();
+      static const char* dummyFunction();
   };
 }
 
