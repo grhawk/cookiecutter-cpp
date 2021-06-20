@@ -35,14 +35,15 @@ jobs:
             - checkout
             - run:
                 command: |
-                  'next_version_git=$(git tag -l | grep -P "v\d+\.\d+\.\d+" | sort -t "." -k1,1n -k2,2n -k3,3n | sort -r | head -n 1 | grep -oP "\d+\.\d+\.\d+")'
-                  git tag -d ${next_version_git}
-                  git config --global user.email "cicd@circleci.com"
+                  next_version_git=${CIRCLE_TAG:5}
+                  echo "#${next_version_git}#"
+                  git tag -d "${CIRCLE_TAG}"
+                  git config --global user.email "cicd@ci.cd"
                   git config --global user.name "CI/CD - CircleCi"
                   bash .circleci/update_version.bash ${next_version_git}
                   git commit -a -m "[CI/CD] Bump version to ${next_version_git}"
                   git tag "${next_version_git}"
-                  git push --delete origin ${next_version_git}
+                  git push --delete origin "${CIRCLE_TAG}"
                   git push --all
                   git push --tags
 
@@ -74,7 +75,7 @@ workflows:
             - update_version_based_on_new_tag_in_main:
                 filters:
                     tags:
-                        only: /^v.*/
+                        only: /^bump-v.*/
                     branches:
                         ignore: /.*/
 
