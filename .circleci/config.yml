@@ -86,18 +86,18 @@ workflows:
                 type: approval
                 requires:
                     - update_version_based_on_new_tag_in_main
-            - testpypi_publish:
+            - test_pypi_publish:
                 requires:
-                    - approval
+                    - approval_to_test_server
             - approval_to_release:
                 type: approval
                 requires:
-                    - testpypi_publish
+                    - test_pypi_publish
             - pypi_publish:
                 requires:
-                    - testpypi_publish
+                    - approval_to_release
 
     build_test:
         jobs:
-            -build_test
+            - build_test
 
