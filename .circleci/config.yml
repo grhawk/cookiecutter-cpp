@@ -2,7 +2,6 @@ version: 2.1
 jobs:
     build_test:
         docker:
-#            - image: circleci/python:3.6.4
             - image: ubuntu:focal
         steps:
             - checkout  # checkout source code to working directory
@@ -26,6 +25,18 @@ jobs:
             - run:
                   command: |  # Run test suite
                       pipenv run pytest -sv
+    update_version_based_on_new_tag_in_main:
+        docker:
+            - image: circleci/python:3.6.4
+        steps:
+            - checkout
+            - command: |
+                  next_version_git=$(git tag -l | grep -P 'v\d+\.\d+\.\d+' | sort -t "." -k1,1n -k2,2n -k3,3n | sort -r | head -n 1 | grep -oP '\d+\.\d+\.\d+')
+                  git tag -d ${next_version_git}
+                  bash .circleci/update_version.bash ${next_version_git}
+                  git commit -a -m "Bump version to ${next_version_git}"
+                  git tag "v${next_version_gift}"
+                  git push --all
     test_pypi_publish:
         docker:
             - image: circleci/python:3.6.4
@@ -52,6 +63,15 @@ workflows:
     build_test_publish:
         jobs:
             - build_test
+            - update_version_based_on_new_tag_in_main:
+                  requires:
+                      - build_test
+                  filters:
+                    branches:
+                      only:
+                        - main
+                    tags:
+                      only: /^v.*/
             - test_pypi_publish:
                   requires:
                       - build_test
@@ -62,6 +82,7 @@ workflows:
 #            - pypi_publish:
 #                  requires:
 #                      - build_test
+                       -
 #                  filters:
 #                      branches:
 #                          only:
