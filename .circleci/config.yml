@@ -40,9 +40,12 @@ jobs:
                   git config --global user.email "cicd@circleci.com"
                   git config --global user.name "CI/CD - CircleCi"
                   bash .circleci/update_version.bash ${next_version_git}
-                  git commit -a -m "Bump version to ${next_version_git}"
-                  git tag "v${next_version_gift}"
+                  git commit -a -m "[CI/CD] Bump version to ${next_version_git}"
+                  git tag "${next_version_git}"
+                  git push --delete origin ${next_version_git}
                   git push --all
+                  git push --tags
+
     test_pypi_publish:
         docker:
             - image: circleci/python:3.6.4
