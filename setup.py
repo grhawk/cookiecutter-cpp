@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(
     name='cookiecutter-cpp',
     packages=[],
-    version='0.1.0',
+    version='0.2.0',
     description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects',
     long_description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects. The template includes also GoogleTest examples and the possibility to embed a logging system.',
     author='Riccardo Petraglia (forked from https://github.com/audreyr/cookiecutter-pypackage)',
