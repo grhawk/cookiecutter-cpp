@@ -34,6 +34,8 @@ jobs:
                 command: |
                   'next_version_git=$(git tag -l | grep -P "v\d+\.\d+\.\d+" | sort -t "." -k1,1n -k2,2n -k3,3n | sort -r | head -n 1 | grep -oP "\d+\.\d+\.\d+")'
                   git tag -d ${next_version_git}
+                  git config --global user.email "cicd@circleci.com"
+                  git config --global user.name "CI/CD - CircleCi"
                   bash .circleci/update_version.bash ${next_version_git}
                   git commit -a -m "Bump version to ${next_version_git}"
                   git tag "v${next_version_gift}"
