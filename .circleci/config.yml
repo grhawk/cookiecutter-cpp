@@ -30,8 +30,9 @@ jobs:
             - image: circleci/python:3.6.4
         steps:
             - checkout
-            - command: |
-                  next_version_git=$(git tag -l | grep -P 'v\d+\.\d+\.\d+' | sort -t "." -k1,1n -k2,2n -k3,3n | sort -r | head -n 1 | grep -oP '\d+\.\d+\.\d+')
+            - run:
+                command: |
+                  'next_version_git=$(git tag -l | grep -P "v\d+\.\d+\.\d+" | sort -t "." -k1,1n -k2,2n -k3,3n | sort -r | head -n 1 | grep -oP "\d+\.\d+\.\d+")'
                   git tag -d ${next_version_git}
                   bash .circleci/update_version.bash ${next_version_git}
                   git commit -a -m "Bump version to ${next_version_git}"
@@ -79,10 +80,10 @@ workflows:
                       branches:
                           only:
                               - develop
+
 #            - pypi_publish:
 #                  requires:
 #                      - build_test
-                       -
 #                  filters:
 #                      branches:
 #                          only:
