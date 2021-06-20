@@ -63,23 +63,20 @@ jobs:
 workflows:
     build_test_publish:
         jobs:
-            - build_test
             - update_version_based_on_new_tag_in_main:
-                  requires:
-                      - build_test
                   filters:
                     branches:
                       only:
                         - main
                     tags:
                       only: /^v.*/
-            - test_pypi_publish:
-                  requires:
-                      - build_test
-                  filters:
-                      branches:
-                          only:
-                              - develop
+#            - test_pypi_publish:
+#                  requires:
+#                      - build_test
+#                  filters:
+#                      branches:
+#                          only:
+#                              - develop
 
 #            - pypi_publish:
 #                  requires:
