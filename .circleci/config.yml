@@ -69,15 +69,19 @@ jobs:
                       pipenv install twine
                       pipenv run twine upload dist/*
 workflows:
-    build_test_publish:
+    bump_version_and_publish:
         jobs:
             - update_version_based_on_new_tag_in_main:
-                  filters:
-                    branches:
-                      only:
-                        - main
+                filters:
                     tags:
-                      only: /^v.*/
+                        only: /^v.*/
+                    branches:
+                        ignore: /.*/
+
+
+
+#    build_test:
+#        jobs:
 #            - test_pypi_publish:
 #                  requires:
 #                      - build_test
