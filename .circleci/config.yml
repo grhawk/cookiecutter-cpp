@@ -79,20 +79,16 @@ workflows:
                         only: /^bump\/v\d+\.\d+\.\d+.*/
                     branches:
                         ignore: /.*/
-            - approval_to_test_server:
-                type: approval
-                requires:
-                    - update_version_based_on_new_tag_in_main
             - test_pypi_publish:
                 requires:
-                    - approval_to_test_server
-            - approval_to_release:
+                    - update_version_based_on_new_tag_in_main
+            - hold_publish:
                 type: approval
                 requires:
                     - test_pypi_publish
             - pypi_publish:
                 requires:
-                    - approval_to_release
+                    - hold_publish
 
     build_test:
         jobs:
