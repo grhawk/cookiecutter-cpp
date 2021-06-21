@@ -81,8 +81,6 @@ workflows:
     publish:   # This is gonna run just after the bump_version automatically.
         jobs:
             - test_pypi_publish:
-                requires:
-                    - update_version_based_on_new_tag_in_main
                 filters:
                     tags:
                         only: /^v\d+\.\d+\.\d+.*/
