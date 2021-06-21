@@ -42,7 +42,7 @@ jobs:
                   git config --global user.email "cicd@ci.cd"
                   git config --global user.name "CI/CD - CircleCi"
                   bash .circleci/update_version.bash ${next_version_git}
-                  git commit -a -m "[CI/CD] Bump version to ${next_version_git}"
+                  git commit -a -m "[skip ci] [CI/CD] Bump version to ${next_version_git}"
                   git tag "${next_version_git}"
                   git push
                   git push --delete origin "${CIRCLE_TAG}"
