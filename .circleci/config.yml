@@ -82,13 +82,28 @@ workflows:
             - test_pypi_publish:
                 requires:
                     - update_version_based_on_new_tag_in_main
+                filters:
+                    tags:
+                        only: /^bump\/v\d+\.\d+\.\d+.*/
+                    branches:
+                        ignore: /.*/
             - hold_publish:
                 type: approval
                 requires:
                     - test_pypi_publish
+                filters:
+                    tags:
+                        only: /^bump\/v\d+\.\d+\.\d+.*/
+                    branches:
+                        ignore: /.*/
             - pypi_publish:
                 requires:
                     - hold_publish
+                filters:
+                    tags:
+                        only: /^bump\/v\d+\.\d+\.\d+.*/
+                    branches:
+                        ignore: /.*/
 
     build_test:
         jobs:
