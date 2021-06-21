@@ -6,13 +6,13 @@ setup(
     name='cookiecutter-cpp-test',
     packages=[],
     version='0.2.0',
-    description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects',
-    long_description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects. The template includes also GoogleTest examples and the possibility to embed a logging system.',
-    author='Riccardo Petraglia (forked from https://github.com/audreyr/cookiecutter-pypackage)',
+    description='Cookiecutter template for C++ with several lib ready to be used.',
+    long_description='Cookiecutter template for C++ including ready to use libs for logging and unittesting.',
+    author='Riccardo Petraglia\n(forked from https://github.com/audreyr/cookiecutter-pypackage)',
     license='BSD',
     author_email='riccardo.petraglia@gmail.com',
     url='https://github.com/grhawk/cookiecutter-cpp.git',
-    keywords=['cookiecutter', 'template', 'package', 'c++', 'cpp', 'gtest'],
+    keywords=['cookiecutter', 'template', 'package', 'c++', 'cpp', 'gtest', 'spdlog'],
     python_requires='>=3.6',
     setup_requires=['wheel'],
     classifiers=[
@@ -29,11 +29,5 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',
-    ],
-    # classifiers= [
-    #     "Development Status :: 3 - Alpha",
-    #     "Intended Audience :: Developers",
-    #     'License :: OSI Approved :: MIT License',
-    #     "Programming Language :: Python :: 3",
-    # ]
+    ]
 )
