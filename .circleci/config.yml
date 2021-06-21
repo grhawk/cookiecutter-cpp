@@ -73,15 +73,7 @@ jobs:
 workflows:
     bump_version_and_publish:
         jobs:
-            - build_test:
-                filters:
-                    tags:
-                        only: /^bump\/v\d+\.\d+\.\d+.*/
-                    branches:
-                        ignore: /.*/
             - update_version_based_on_new_tag_in_main:
-                requires:
-                    - build_test
                 filters:
                     tags:
                         only: /^bump\/v\d+\.\d+\.\d+.*/
