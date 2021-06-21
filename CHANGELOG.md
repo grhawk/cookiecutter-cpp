@@ -9,6 +9,7 @@ Versioning
 ----------
 **[Unreleased]**
 * Added a script to automate CHANGELOG management.
+* [FIX] CircleCi version and publish.
 
 **[0.2.0]**
 * First release of Cookiecutter-C++ based on the `cookiecutter-pypackage`

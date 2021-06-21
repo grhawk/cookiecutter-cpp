@@ -35,15 +35,15 @@ jobs:
             - checkout
             - run:
                 command: |
-                  next_version_git=${CIRCLE_TAG:5}
+                  next_version_git=${CIRCLE_TAG:6}
                   echo "#${next_version_git}#"
                   git checkout main
                   git tag -d "${CIRCLE_TAG}"
                   git config --global user.email "cicd@ci.cd"
                   git config --global user.name "CI/CD - CircleCi"
                   bash .circleci/update_version.bash ${next_version_git}
-                  git commit -a -m "[skip ci] [CI/CD] Bump version to ${next_version_git}"
-                  git tag "${next_version_git}"
+                  git commit -a -m "[skip ci] [CI/CD] Bump version to v${next_version_git}"
+                  git tag "v${next_version_git}"
                   git push
                   git push --delete origin "${CIRCLE_TAG}"
                   git push --tags
