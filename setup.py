@@ -3,9 +3,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='cookiecutter-cpp-test',
+    name='cookiecutter-cpp',
     packages=[],
-    version='0.2.0',
+    version='0.0.0',
     description='Cookiecutter template for C++ with several lib ready to be used.',
     long_description='Cookiecutter template for C++ including ready to use libs for logging and unittesting.',
     author='Riccardo Petraglia (forked from https://github.com/audreyr/cookiecutter-pypackage)',
