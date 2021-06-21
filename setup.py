@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='cookiecutter-cpp',
+    name='cookiecutter-cpp-test',
     packages=[],
     version='0.2.0',
     description='Cookiecutter template for a C++ software with a lib and a console in separated folders/projects',
