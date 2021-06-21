@@ -47,7 +47,6 @@ jobs:
                   git push
                   git push --delete origin "${CIRCLE_TAG}"
                   git push --tags
-
     test_pypi_publish:
         docker:
             - image: circleci/python:3.6.4
@@ -71,7 +70,7 @@ jobs:
                       pipenv install twine
                       pipenv run twine upload dist/*
 workflows:
-    bump_version_and_publish:
+    bump_version:
         jobs:
             - update_version_based_on_new_tag_in_main:
                 filters:
@@ -79,12 +78,14 @@ workflows:
                         only: /^bump\/v\d+\.\d+\.\d+.*/
                     branches:
                         ignore: /.*/
+    publish:   # This is gonna run just after the bump_version automatically.
+        jobs:
             - test_pypi_publish:
                 requires:
                     - update_version_based_on_new_tag_in_main
                 filters:
                     tags:
-                        only: /^bump\/v\d+\.\d+\.\d+.*/
+                        only: /^v\d+\.\d+\.\d+.*/
                     branches:
                         ignore: /.*/
             - hold_publish:
@@ -93,7 +94,7 @@ workflows:
                     - test_pypi_publish
                 filters:
                     tags:
-                        only: /^bump\/v\d+\.\d+\.\d+.*/
+                        only: /^v\d+\.\d+\.\d+.*/
                     branches:
                         ignore: /.*/
             - pypi_publish:
@@ -101,7 +102,7 @@ workflows:
                     - hold_publish
                 filters:
                     tags:
-                        only: /^bump\/v\d+\.\d+\.\d+.*/
+                        only: /^v\d+\.\d+\.\d+.*/
                     branches:
                         ignore: /.*/
 
