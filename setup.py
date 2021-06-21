@@ -8,7 +8,7 @@ setup(
     version='0.2.0',
     description='Cookiecutter template for C++ with several lib ready to be used.',
     long_description='Cookiecutter template for C++ including ready to use libs for logging and unittesting.',
-    author='Riccardo Petraglia\n(forked from https://github.com/audreyr/cookiecutter-pypackage)',
+    author='Riccardo Petraglia (forked from https://github.com/audreyr/cookiecutter-pypackage)',
     license='BSD',
     author_email='riccardo.petraglia@gmail.com',
     url='https://github.com/grhawk/cookiecutter-cpp.git',
