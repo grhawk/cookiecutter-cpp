@@ -8,6 +8,7 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+* Improved documentation.
 
 **[2.0.0]**
 * Added a script to automate CHANGELOG management.

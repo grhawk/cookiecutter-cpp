@@ -13,7 +13,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/audreyr/cookiecutter-pypackage/issues
+Report bugs at https://github.com/grhawk/cookiecutter-cpp/issues
 
 If you are reporting a bug, please include:
 
@@ -44,7 +44,7 @@ Submit Feedback
 ~~~~~~~~~~~~~~~
 
 The best way to send feedback is to file an issue at
-https://github.com/audreyr/cookiecutter-pypackage/issues.
+https://github.com/grhawk/cookiecutter-cpp/issues.
 
 If you are proposing a new feature:
 
@@ -56,11 +56,11 @@ If you are proposing a new feature:
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `cookiecutter-pypackage` for local
+Ready to contribute? Here's how to set up `cookiecutter-cpp` for local
 development. Please note this documentation assumes you already have
 `virtualenv` and `Git` installed and ready to go.
 
-1. Fork the `cookiecutter-pypackage` repo on GitHub.
+1. Fork the `cookiecutter-cpp` repo on GitHub.
 
 ::
 
@@ -110,7 +110,7 @@ development. Please note this documentation assumes you already have
 
 ::
 
-6. The next step would be to run the test cases. `cookiecutter-pypackage` uses
+6. The next step would be to run the test cases. `cookiecutter-cpp` uses
    pytest, you can run PyTest. Before you run pytest you should ensure all
    dependancies are installed:
 
@@ -172,7 +172,7 @@ Before you submit a pull request, check that it meets these guidelines:
    the list in README.rst.
 
 3. The pull request should work for Python 3.6 and 3.7, 3.8 and for PyPy. Check
-   https://travis-ci.org/audreyr/cookiecutter-pypackage/pull_requests and
+   https://app.circleci.com/pipelines/github/grhawk and
    make sure that the tests pass for all supported Python versions.
 
 Add a New Test

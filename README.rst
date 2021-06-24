@@ -1,42 +1,32 @@
 ================
-Cookiecutter C++ 
+Cookiecutter C++
 ================
 
-.. image:: https://pyup.io/repos/github/audreyfeldroy/cookiecutter-pypackage/shield.svg
-    :target: https://pyup.io/repos/github/audreyfeldroy/cookiecutter-pypackage/
-    :alt: Updates
-
-.. image:: https://travis-ci.org/audreyfeldroy/cookiecutter-pypackage.svg?branch=master
-    :target: https://travis-ci.org/github/audreyfeldroy/cookiecutter-pypackage
+.. image:: https://circleci.com/gh/grhawk/cookiecutter-cpp.svg?style=shield
+    :target: https://circleci.com/gh/grhawk/cookiecutter-cpp
     :alt: Build Status
 
-.. image:: https://readthedocs.org/projects/cookiecutter-pypackage/badge/?version=latest
-    :target: https://cookiecutter-pypackage.readthedocs.io/en/latest/?badge=latest
-    :alt: Documentation Status
+Cookiecutter_ template for a C++ package.
 
-Cookiecutter_ template for a Python package.
-
-* GitHub repo: https://github.com/audreyfeldroy/cookiecutter-pypackage/
-* Documentation: https://cookiecutter-pypackage.readthedocs.io/
+* GitHub repo: https://github.com/grhawk/cookiecutter-cpp/
+* Documentation (this is for cookiecutter-pypackage): https://cookiecutter-pypackage.readthedocs.io/
 * Free software: BSD license
 
 
 Credits
 -------
-This is basically a for from:
-https://cookiecutter.readthedocs.io/en/1.7.2/README.html
+This is basically a fork of Cookiecutter_.
 
 
 Features
 --------
 
-* Testing setup with ``unittest`` and ``python setup.py test`` or ``pytest``
-* Travis-CI_: Ready for Travis Continuous Integration testing
-* Tox_ testing: Setup to easily test for Python 3.6, 3.7, 3.8
-* Sphinx_ docs: Documentation ready for generation with, for example, `Read the Docs`_
-* bump2version_: Pre-configured version bumping with a single command
-* Auto-release to PyPI_ when you push a new tag to master (optional)
-* Command line interface using Click (optional)
+* Testing setup with ``gtest``
+* Circleci_: Ready for Circleci Continuous Integration testing
+* Doxigen_ docs: TODO!
+* bump2version_: TODO!
+* Command line interface using CLI11 (optional)
+* Logging system using spdlog
 
 .. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
 
@@ -45,15 +35,13 @@ Build Status
 
 Linux:
 
-.. image:: https://img.shields.io/travis/audreyfeldroy/cookiecutter-pypackage.svg
-    :target: https://travis-ci.org/audreyfeldroy/cookiecutter-pypackage
+.. image:: https://circleci.com/gh/grhawk/cookiecutter-cpp.svg?style=shield
+    :target: https://circleci.com/gh/grhawk/cookiecutter-cpp
     :alt: Linux build status on Travis CI
 
 Windows:
+TODO!
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/audreyr/cookiecutter-pypackage?branch=master&svg=true
-    :target: https://ci.appveyor.com/project/audreyr/cookiecutter-pypackage/branch/master
-    :alt: Windows build status on Appveyor
 
 Quickstart
 ----------
@@ -65,24 +53,12 @@ Cookiecutter 1.4.0 or higher)::
 
 Generate a Python package project::
 
-    cookiecutter https://github.com/audreyfeldroy/cookiecutter-pypackage.git
+    cookiecutter https://github.com/grhawk/cookiecutter-cpp.git
 
 Then:
 
 * Create a repo and put it there.
-* Add the repo to your Travis-CI_ account.
-* Install the dev requirements into a virtualenv. (``pip install -r requirements_dev.txt``)
-* Register_ your project with PyPI.
-* Run the Travis CLI command ``travis encrypt --add deploy.password`` to encrypt your PyPI password in Travis config
-  and activate automated deployment on PyPI when you push a new tag to master branch.
-* Add the repo to your `Read the Docs`_ account + turn on the Read the Docs service hook.
-* Release your package by pushing a new tag to master.
-* Add a ``requirements.txt`` file that specifies the packages you will need for
-  your project and their versions. For more info see the `pip docs for requirements files`_.
-* Activate your project on `pyup.io`_.
-
-.. _`pip docs for requirements files`: https://pip.pypa.io/en/stable/user_guide/#requirements-files
-.. _Register: https://packaging.python.org/tutorials/packaging-projects/#uploading-the-distribution-archives
+* Add the repo to your Circleci_ account.
 
 For more details, see the `cookiecutter-pypackage tutorial`_.
 
@@ -92,30 +68,6 @@ Not Exactly What You Want?
 --------------------------
 
 Don't worry, you have options:
-
-Similar Cookiecutter Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* `Nekroze/cookiecutter-pypackage`_: A fork of this with a PyTest test runner,
-  strict flake8 checking with Travis/Tox, and some docs and ``setup.py`` differences.
-
-* `tony/cookiecutter-pypackage-pythonic`_: Fork with py2.7+3.3 optimizations.
-  Flask/Werkzeug-style test runner, ``_compat`` module and module/doc conventions.
-  See ``README.rst`` or the `github comparison view`_ for exhaustive list of
-  additions and modifications.
-
-* `ardydedase/cookiecutter-pypackage`_: A fork with separate requirements files rather than a requirements list in the ``setup.py`` file.
-
-* `lgiordani/cookiecutter-pypackage`_: A fork of Cookiecutter that uses Punch_ instead of bump2version_ and with separate requirements files.
-
-* `briggySmalls/cookiecutter-pypackage`_: A fork using Poetry_ for neat package management and deployment, with linting, formatting, no makefiles and more.
-
-* `veit/cookiecutter-namespace-template`_: A cookiecutter template for python modules with a namespace
-
-* `zillionare/cookiecutter-pypackage`_: A template containing Poetry_, Mkdocs_, Github CI and many more. It's a template and a package also (can be installed with `pip`)
-
-* Also see the `network`_ and `family tree`_ for this repo. (If you find
-  anything that should be listed here, please add it and send a pull request!)
 
 Fork This / Create Your Own
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -137,9 +89,9 @@ I also accept pull requests on this, if they're small, atomic, and if they
 make my own packaging experience better.
 
 
-.. _Travis-CI: http://travis-ci.org/
+.. _Circleci: http://circleci.com/
 .. _Tox: http://testrun.org/tox/
-.. _Sphinx: http://sphinx-doc.org/
+.. _Doxigen: http://doxigen.org/
 .. _Read the Docs: https://readthedocs.io/
 .. _`pyup.io`: https://pyup.io/
 .. _bump2version: https://github.com/c4urself/bump2version
