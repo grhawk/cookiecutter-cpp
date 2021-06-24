@@ -14,11 +14,11 @@ def remove_folder(folderpath):
     shutil.rmtree(folderpath)
 
 if __name__ == '__main__':
-    
-    
+
+
     subprocess.call(('git', 'init', '--initial-branch=main'))
     subprocess.call(('git', 'add', '.'))
-    
+
     if '{{ cookiecutter.create_author_file }}' != 'y':
         remove_file('AUTHORS.rst')
 
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         subprocess.call(('git', 'submodule', 'add', 'git@github.com:CLIUtils/CLI11.git', 'libs/CLI11'))
 
     if '{{ cookiecutter.logging_system }}' == 'y':
-        subprocess.call(('git', 'submodule', 'add', 'git@github.com:gabime/spdlog.git', 'libs/spdlog'))
+        subprocess.call(('git', 'submodule', 'add', '-b', 'v1.8.5', 'git@github.com:gabime/spdlog.git', 'libs/spdlog'))
     else:
         remove_folder('logging')
 
