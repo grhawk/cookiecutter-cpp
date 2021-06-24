@@ -9,6 +9,7 @@ Versioning
 ----------
 **[Unreleased]**
 * Improved documentation.
+* spdlog version fixed to v1.8.5.
 
 **[2.0.0]**
 * Added a script to automate CHANGELOG management.
