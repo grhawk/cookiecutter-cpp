@@ -41,7 +41,7 @@ if __name__ == '__main__':
         remove_file('LICENSE')
 
     if '{{ cookiecutter.command_line_interface }}' == 'CLI11':
-        subprocess.call(('git', 'submodule', 'add', '-b', 'master', 'git@github.com:CLIUtils/CLI11.git', 'libs/CLI11'))
+        subprocess.call(('git', 'submodule', 'add', '-b', 'main', 'git@github.com:CLIUtils/CLI11.git', 'libs/CLI11'))
 
     if '{{ cookiecutter.logging_system }}' == 'y':
         subprocess.call(('git', 'submodule', 'add', 'git@github.com:gabime/spdlog.git', 'libs/spdlog'))
