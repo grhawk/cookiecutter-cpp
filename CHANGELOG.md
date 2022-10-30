@@ -9,6 +9,8 @@ Versioning
 ----------
 **[Unreleased]**
 
+**[2.0.2]**
+
 **[2.0.1]**
 * Improved documentation.
 * spdlog version fixed to v1.8.5.
