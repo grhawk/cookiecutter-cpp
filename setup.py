@@ -13,7 +13,7 @@ setup(
     author_email='riccardo.petraglia@gmail.com',
     url='https://github.com/grhawk/cookiecutter-cpp.git',
     keywords=['cookiecutter', 'template', 'package', 'c++', 'cpp', 'gtest', 'spdlog'],
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     setup_requires=['wheel'],
     classifiers=[
         'Development Status :: 4 - Beta',
