@@ -27,7 +27,7 @@ jobs:
                       pipenv run pytest -sv
     update_version_based_on_new_tag_in_main:
         docker:
-            - image: circleci/python:3.6.4
+            - image: circleci/python:3.9.9
         steps:
             - add_ssh_keys:
                   fingerprints:
@@ -49,22 +49,24 @@ jobs:
                   git push --tags
     test_pypi_publish:
         docker:
-            - image: circleci/python:3.6.4
+            - image: circleci/python:3.9.9
         steps:
             - checkout  # checkout source code to working directory
             - run:
                   command: |  # create whl, install twine and publish to Test PyPI
+                      pip install --upgrade pip
                       python setup.py sdist bdist_wheel
                       sudo pip install pipenv
                       pipenv install twine
                       pipenv run twine upload --repository testpypi dist/*
     pypi_publish:
         docker:
-            - image: circleci/python:3.6.4
+            - image: circleci/python:3.9.9
         steps:
             - checkout  # checkout source code to working directory
             - run:
                   command: |  # create whl, install twine and publish to PyPI
+                      pip install --upgrade pip
                       python setup.py sdist bdist_wheel
                       sudo pip install pipenv
                       pipenv install twine
