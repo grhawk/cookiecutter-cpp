@@ -40,16 +40,17 @@ if __name__ == '__main__':
     if 'Not open source' == '{{ cookiecutter.open_source_license }}':
         remove_file('LICENSE')
 
-    if '{{ cookiecutter.command_line_interface }}' == 'CLI11':
-        subprocess.call(('git', 'submodule', 'add', '-b', 'main', 'git@github.com:CLIUtils/CLI11.git', 'libs/CLI11'))
+    #if '{{ cookiecutter.command_line_interface }}' == 'CLI11':
+        #subprocess.call(('git', 'submodule', 'add', '-b', 'main', 'git@github.com:CLIUtils/CLI11.git', 'libs/CLI11'))
 
     if '{{ cookiecutter.logging_system }}' == 'y':
-        subprocess.call(('git', 'submodule', 'add', 'git@github.com:gabime/spdlog.git', 'libs/spdlog'))
-        with inside_dir('libs/spdlog'):
-            subprocess.call(('git', 'checkout', 'v1.8.5'))
+        pass
+    #    subprocess.call(('git', 'submodule', 'add', 'git@github.com:gabime/spdlog.git', 'libs/spdlog'))
+    #    with inside_dir('libs/spdlog'):
+    #        subprocess.call(('git', 'checkout', 'v1.8.5'))
 
     else:
         remove_folder('logging')
 
-    subprocess.call(('git', 'commit', '-m', 'Initial commit'))
+    subprocess.call(('git', 'commit', '-m', 'Let there be light: and there was light.'))
 

@@ -8,7 +8,7 @@
 int main(int argc, char* argv[])
 {
     {% if cookiecutter.logging_system == 'y' -%}logging::Log LOGGER = logging::Log();{% endif %}
-    {% if cookiecutter.logging_system == 'n' -%}std::string addToMessage = "It seems no console support has been activated!";{% endif %}
+    std::string addToMessage = "It seems no console support has been activated!";
 
     {% if cookiecutter.command_line_interface == 'CLI11' -%}CLI::App cli{"App description"};
     cli.add_option("Add to message",
