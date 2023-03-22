@@ -21,26 +21,15 @@ This is basically a fork of Cookiecutter_.
 Features
 --------
 
-* Testing setup with ``gtest``
+* Managing dependencies with Conan_ and the CMake-Conan-Integration_
+* No need to execute Conan_ commands (everything run with CMake).
+* Provide CLI11_ out-of-the-box (if requested).
+* Provide spdlog_ out-of-the-box (if requested).
 * Circleci_: Ready for Circleci Continuous Integration testing
-* Doxigen_ docs: TODO!
+* hdoc_ documentation: TODO!
 * bump2version_: TODO!
-* Command line interface using CLI11 (optional)
-* Logging system using spdlog
 
 .. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
-
-Build Status
--------------
-
-Linux:
-
-.. image:: https://circleci.com/gh/grhawk/cookiecutter-cpp.svg?style=shield
-    :target: https://circleci.com/gh/grhawk/cookiecutter-cpp
-    :alt: Linux build status on Travis CI
-
-Windows:
-TODO!
 
 
 Quickstart
@@ -64,6 +53,7 @@ For more details, see the `cookiecutter-pypackage tutorial`_.
 
 .. _`cookiecutter-pypackage tutorial`: https://cookiecutter-pypackage.readthedocs.io/en/latest/tutorial.html
 
+
 Not Exactly What You Want?
 --------------------------
 
@@ -82,11 +72,15 @@ be a fork.
 * It's up to you whether or not to rename your fork/own version. Do whatever
   you think sounds good.
 
-Or Submit a Pull Request
-~~~~~~~~~~~~~~~~~~~~~~~~
+Contributing
+------------
 
-I also accept pull requests on this, if they're small, atomic, and if they
-make my own packaging experience better.
+1. Fork the project.
+2. Edit whatever you feel like.
+3. Describe the changes on the "unreleased" tag in the CHANGELOG.md.
+4. Create a Merge Request to the `main` branch.
+
+Once a new branch has been merged, it is enough to create a new semver tag to generate a new version of the cookiecutter repo.
 
 
 .. _Circleci: http://circleci.com/
@@ -99,6 +93,11 @@ make my own packaging experience better.
 .. _Poetry: https://python-poetry.org/
 .. _PyPi: https://pypi.python.org/pypi
 .. _Mkdocs: https://pypi.org/project/mkdocs/
+.. _Conan: https://docs.conan.io/1/index.html
+.. _CMake-Conan-Integration: https://github.com/conan-io/cmake-conan
+.. _hdoc: https://hdoc.io/
+.. _CLI11: https://github.com/CLIUtils/CLI11
+.. _spdlog: https://github.com/gabime/spdlog
 
 .. _`Nekroze/cookiecutter-pypackage`: https://github.com/Nekroze/cookiecutter-pypackage
 .. _`tony/cookiecutter-pypackage-pythonic`: https://github.com/tony/cookiecutter-pypackage-pythonic
@@ -110,3 +109,4 @@ make my own packaging experience better.
 .. _github comparison view: https://github.com/tony/cookiecutter-pypackage-pythonic/compare/audreyr:master...master
 .. _`network`: https://github.com/audreyr/cookiecutter-pypackage/network
 .. _`family tree`: https://github.com/audreyr/cookiecutter-pypackage/network/members
+
