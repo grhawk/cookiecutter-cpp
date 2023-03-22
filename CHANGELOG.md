@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+
+**[3.0.1]**
 * [FIX] Publishing should work now.
 
 **[3.0.0]**
