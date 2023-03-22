@@ -97,7 +97,7 @@ def build_and_test(result):
     build_dir = str(result.project) + "/build"
     #run_inside_dir("cat ./sandbox/src/EntryPoint.cpp", str(result.project))
     assert run_inside_dir('mkdir build', str(result.project)) == 0
-    assert run_inside_dir('cmake ..', build_dir) == 0
+    assert run_inside_dir('cmake -v ..', build_dir) == 0
     assert run_inside_dir('cmake --build .', build_dir) == 0
     assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', build_dir) == 0
     assert run_inside_dir('./sandbox/tests/cpp_boilerplate-sandbox-test', build_dir) == 0
