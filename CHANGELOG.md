@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+* Using CMAKE and CONAN2 to manage dependencies instead of submodules.
+* Fixing the CircleCi pipeline. Tests run successfully.
 
 **[2.0.2]**
 

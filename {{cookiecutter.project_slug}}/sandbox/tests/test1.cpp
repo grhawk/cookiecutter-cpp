@@ -8,8 +8,9 @@
 {% if cookiecutter.logging_system == 'y' -%}logging::Log LOGGER = logging::Log();
 {% endif %}
 TEST(Example, ExampleTest){
-Sandbox sandbox = Sandbox();
-ASSERT_STREQ(sandbox.message(), "Hello!");
+  Sandbox sandbox = Sandbox();
+  {% if cookiecutter.logging_system == 'y' -%}_LOG_INFO("Testing");{% endif %}
+  ASSERT_STREQ(sandbox.message(), "Hello!");
 }
 
 #pragma clang diagnostic pop

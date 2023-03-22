@@ -1,30 +1,18 @@
 version: 2.1
+
+executors:
+  exectr:
+    docker:
+      - image: grhawk/cookiecutter-cpp-test-environment:latest
+
 jobs:
     build_test:
-        docker:
-            - image: ubuntu:focal
+        executor: exectr
         steps:
             - checkout  # checkout source code to working directory
             - run:
-                  command: |  # create whl and use pipenv to install dependencies
-                      export DEBIAN_FRONTEND=noninteractive
-                      apt-get update -y && apt-get -y install software-properties-common
-                      add-apt-repository ppa:git-core/ppa -y
-                      apt-get update -y
-                      apt-get -y install build-essential wget python3 python3-pip git
-                      mkdir cmake && cd cmake && wget https://github.com/Kitware/CMake/releases/download/v3.18.5/cmake-3.18.5-Linux-x86_64.sh && \
-                                                chmod +x cmake-3.18.5-Linux-x86_64.sh && \
-                                                ./cmake-3.18.5-Linux-x86_64.sh --skip-license --prefix=/usr/local && cd ..
-                      pip3 install setuptools
-                      python3 setup.py sdist bdist_wheel
-                      pip3 install pipenv
-                      pipenv install -r requirements_dev.txt
-                      pipenv install pytest
-                      cmake --version
-                      ls -lrt
-            - run:
                   command: |  # Run test suite
-                      pipenv run pytest -sv
+                      pytest -sv
     update_version_based_on_new_tag_in_main:
         docker:
             - image: cimg/python:3.9.9

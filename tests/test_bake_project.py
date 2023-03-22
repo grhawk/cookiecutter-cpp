@@ -1,15 +1,12 @@
-from contextlib import contextmanager
-import shlex
-import os
-import sys
-import subprocess
-import yaml
 import datetime
+import os
+import shlex
+import subprocess
+import sys
+from contextlib import contextmanager
+
 from cookiecutter.utils import rmtree
 
-from click.testing import CliRunner
-
-import importlib
 
 def pytest_exception_interact(node, call, report):
     if report.failed:
@@ -98,8 +95,9 @@ def test_bake_and_run_tests(cookies):
 
 def build_and_test(result):
     build_dir = str(result.project) + "/build"
+    #run_inside_dir("cat ./sandbox/src/EntryPoint.cpp", str(result.project))
     assert run_inside_dir('mkdir build', str(result.project)) == 0
-    assert run_inside_dir('cmake ..', build_dir) == 0
+    assert run_inside_dir('cmake -v ..', build_dir) == 0
     assert run_inside_dir('cmake --build .', build_dir) == 0
     assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', build_dir) == 0
     assert run_inside_dir('./sandbox/tests/cpp_boilerplate-sandbox-test', build_dir) == 0
@@ -222,34 +220,25 @@ def test_bake_not_open_source(cookies):
         assert 'License' not in result.project.join('README.rst').read()
 
 
-# def test_project_with_hyphen_in_module_name(cookies):
-#     result = cookies.bake(
-#         extra_context={'project_name': 'something-with-a-dash'}
-#     )
-#     assert result.project is not None
-#     project_path = str(result.project)
-#
-#     # when:
-#     travis_setup_cmd = ('python travis_pypi_setup.py'
-#                         ' --repo audreyr/cookiecutter-pypackage'
-#                         ' --password invalidpass')
-#     run_inside_dir(travis_setup_cmd, project_path)
-#
-#     # then:
-#     result_travis_config = yaml.load(
-#         open(os.path.join(project_path, ".travis.yml"))
-#     )
-#     assert "secure" in result_travis_config["deploy"]["password"],\
-#         "missing password config in .travis.yml"
-
-
 def test_bake_with_no_console_script(cookies):
     context = {'command_line_interface': "No command-line interface"}
     result = cookies.bake(extra_context=context)
     assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
+    build_and_test(result)
+
 
 def test_bake_with_no_logging_system(cookies):
     context = {'logging_system': 'n'}
     result = cookies.bake(extra_context=context)
     assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
     assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
+    build_and_test(result)
+
+def test_bake_with_no_logging_system_and_no_CLI(cookies):
+    context = {'logging_system': 'n',
+               'command_line_interface': "No command-line interface"}
+    result = cookies.bake(extra_context=context)
+    assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
+    assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
+    assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
+    build_and_test(result)

@@ -4,6 +4,8 @@ project(${PROJECT} VERSION {{cookiecutter.version}})
 
 add_subdirectory(tests)
 
+{% if cookiecutter.command_line_interface == 'CLI11' -%}find_package(CLI11){% endif %}
+
 include_directories(${CMAKE_SOURCE_DIR}/engine/src)
 add_executable(${PROJECT_NAME} src/EntryPoint.cpp src/Sandbox.cpp src/Sandbox.h)
 add_library(${PROJECT_NAME}-lib src/Sandbox.cpp src/Sandbox.h)
