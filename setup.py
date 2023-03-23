@@ -1,13 +1,16 @@
 # !/usr/bin/env python
 
 from setuptools import setup, find_packages
+from pathlib import Path
+this_folder = Path(__file__).parent
 
 setup(
     name='cookiecutter-cpp',
     packages=[],
     version='3.0.1',
-    description='Cookiecutter template for C++ with several lib ready to be used.',
-    long_description='Cookiecutter template for C++ including ready to use libs for logging and unittesting.',
+    description='Cookiecutter template for C++ with several libs ready to be used.',
+    long_description=(this_folder / 'README.rst').read_text(),
+    long_description_content_type='text/x-rst',
     author='Riccardo Petraglia (forked from https://github.com/audreyr/cookiecutter-pypackage)',
     license='BSD',
     author_email='riccardo.petraglia@gmail.com',

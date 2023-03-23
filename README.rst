@@ -21,7 +21,7 @@ This is basically a fork of Cookiecutter_.
 Features
 --------
 
-* Managing dependencies with Conan_ and the CMake-Conan-Integration_
+* Managing dependencies with Conan_ and the CMake-Conan-Integration_. This allows to easily add dependencies directly into the CMakeList.txt file.
 * No need to execute Conan_ commands (everything run with CMake).
 * Provide CLI11_ out-of-the-box (if requested).
 * Provide spdlog_ out-of-the-box (if requested).
@@ -44,10 +44,29 @@ Generate a Python package project::
 
     cookiecutter https://github.com/grhawk/cookiecutter-cpp.git
 
-Then:
+Enter the newly generated folder. Make sure the Conan_ profile is configured::
 
-* Create a repo and put it there.
-* Add the repo to your Circleci_ account.
+    conan profile list
+
+If you don't have a Conan_ profile, you can create one with `conan profile detect --force`.
+At this point you can run::
+
+    mkdir build && cd build;
+    cmake ..
+    cmake --build .
+
+This will prepare the needed C++ libraries and compile the example code.
+You can now test the compiled code::
+
+    ./sandbox/cpp_boilerplate-sandbox
+
+and run the unittests::
+
+     ctest
+
+
+The created folder is already a git repo that you can push on github and has already a basic CI implemented to test
+the code with CircleCI.
 
 For more details, see the `cookiecutter-pypackage tutorial`_.
 
