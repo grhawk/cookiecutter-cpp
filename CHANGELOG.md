@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+
+**[3.0.2]**
 * Improved documentation and added README to pkg-info.
 
 **[3.0.1]**
