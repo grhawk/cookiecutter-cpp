@@ -9,7 +9,7 @@
 {% endif %}
 TEST(Example, ExampleTest){
   Sandbox sandbox = Sandbox();
-  {% if cookiecutter.logging_system == 'y' -%}_LOG_INFO("Testing");{% endif %}
+  {% if cookiecutter.logging_system == 'y' -%}LOG_INFO("Testing");{% endif %}
   ASSERT_STREQ(sandbox.message(), "Hello!");
 }
 

@@ -5,9 +5,9 @@
 
 namespace {{cookiecutter.project_slug}} {
 
-  Application::Application() 
+  Application::Application()
   {
-    {% if cookiecutter.logging_system == 'y' -%}_LOG_CRITICAL("Logging is included!");{% endif %}
+    {% if cookiecutter.logging_system == 'y' -%}LOG_CRITICAL("Logging is included!");{% endif %}
     std::cout << "Starting application!" << std::endl;
   }
 

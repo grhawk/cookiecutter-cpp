@@ -8,6 +8,7 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+* According to https://en.cppreference.com/w/cpp/language/identifiers, identifiers in "_[A-Z].*" are reserved to the implementation.
 
 **[3.0.2]**
 * Improved documentation and added README to pkg-info.
