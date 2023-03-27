@@ -9,6 +9,8 @@ Versioning
 ----------
 **[Unreleased]**
 * According to https://en.cppreference.com/w/cpp/language/identifiers, identifiers in "_[A-Z].*" are reserved to the implementation.
+* Generated code has newlines as expected.
+* More modern version of `cmake` do not have `-v` option.
 
 **[3.0.2]**
 * Improved documentation and added README to pkg-info.
