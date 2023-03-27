@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+
+**[3.0.3]**
 * According to https://en.cppreference.com/w/cpp/language/identifiers, identifiers in "_[A-Z].*" are reserved to the implementation.
 * Generated code has newlines as expected.
 * More modern version of `cmake` do not have `-v` option.
