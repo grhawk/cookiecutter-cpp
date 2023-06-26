@@ -8,6 +8,7 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+* Create a simpler stub by default.
 
 **[3.0.3]**
 * According to https://en.cppreference.com/w/cpp/language/identifiers, identifiers in "_[A-Z].*" are reserved to the implementation.

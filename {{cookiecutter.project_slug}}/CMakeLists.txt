@@ -22,7 +22,7 @@ list(APPEND dependencies
 include(cmake/conan2.cmake)
 include(cmake/gtest.cmake)
 
-add_subdirectory(engine)
+{% if cookiecutter.library_setup == 'y' -%}add_subdirectory(engine){% endif %}
 add_subdirectory(sandbox)
 
 {% if cookiecutter.logging_system == 'y' -%}

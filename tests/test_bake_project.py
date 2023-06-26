@@ -99,7 +99,6 @@ def build_and_test(result):
     assert run_inside_dir('mkdir build', str(result.project)) == 0
     assert run_inside_dir('cmake ..', build_dir) == 0
     assert run_inside_dir('cmake --build .', build_dir) == 0
-    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', build_dir) == 0
     assert run_inside_dir('./sandbox/tests/cpp_boilerplate-sandbox-test', build_dir) == 0
     assert run_inside_dir('./sandbox/cpp_boilerplate-sandbox', build_dir) == 0
 
@@ -234,7 +233,7 @@ def test_bake_with_no_logging_system(cookies):
     assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
     build_and_test(result)
 
-def test_bake_with_no_logging_system_and_no_CLI(cookies):
+def test_bake_with_no_logging_system_and_no_cli(cookies):
     context = {'logging_system': 'n',
                'command_line_interface': "No command-line interface"}
     result = cookies.bake(extra_context=context)
@@ -242,3 +241,34 @@ def test_bake_with_no_logging_system_and_no_CLI(cookies):
     assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
     assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
     build_and_test(result)
+
+def test_bake_library_setup_and_run_tests(cookies):
+    context = {'library_setup': 'y'}
+    with bake_in_temp_dir(cookies,
+                          extra_context=context) as result:
+        assert result.project.isdir()
+        build_and_test(result)
+        print("test_bake_and_run_tests path", str(result.project))
+        assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project) + "/build") == 0
+
+
+def test_bake_library_setup_with_no_logging_system(cookies):
+    context = {'logging_system': 'n',
+               'library_setup': 'y'}
+    result = cookies.bake(extra_context=context)
+    assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
+    assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
+    build_and_test(result)
+    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project) + "/build") == 0
+
+def test_bake_libary_setup_with_no_logging_system_and_no_cli(cookies):
+    context = {'logging_system': 'n',
+               'command_line_interface': "No command-line interface",
+               'library_setup': 'y'}
+    result = cookies.bake(extra_context=context)
+    assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
+    assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
+    assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
+    build_and_test(result)
+    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project) + "/build") == 0
+
