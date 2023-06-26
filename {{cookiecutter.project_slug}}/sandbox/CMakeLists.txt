@@ -6,7 +6,7 @@ add_subdirectory(tests)
 
 {% if cookiecutter.command_line_interface == 'CLI11' -%}find_package(CLI11){% endif %}
 
-{% if cookiecutter.library_setup == 'y' -%}include_directories(${CMAKE_SOURCE_DIR}/engine/src) ${CPACK_PROJECT_NAME}-engine){% endif %}
+{% if cookiecutter.library_setup == 'y' -%}include_directories(${CMAKE_SOURCE_DIR}/engine/src) {% endif %}
 add_executable(${PROJECT_NAME} src/EntryPoint.cpp src/Sandbox.cpp src/Sandbox.h)
 add_library(${PROJECT_NAME}-lib EXCLUDE_FROM_ALL src/Sandbox.cpp src/Sandbox.h)
 

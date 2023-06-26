@@ -249,7 +249,7 @@ def test_bake_library_setup_and_run_tests(cookies):
         assert result.project.isdir()
         build_and_test(result)
         print("test_bake_and_run_tests path", str(result.project))
-        assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', result.project) == 0
+        assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project) + "/build") == 0
 
 
 def test_bake_library_setup_with_no_logging_system(cookies):
@@ -258,8 +258,8 @@ def test_bake_library_setup_with_no_logging_system(cookies):
     result = cookies.bake(extra_context=context)
     assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
     assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
-    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', result.project) == 0
     build_and_test(result)
+    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project) + "/build") == 0
 
 def test_bake_libary_setup_with_no_logging_system_and_no_cli(cookies):
     context = {'logging_system': 'n',
@@ -269,5 +269,6 @@ def test_bake_libary_setup_with_no_logging_system_and_no_cli(cookies):
     assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
     assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
     assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
-    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', result.project) == 0
     build_and_test(result)
+    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project) + "/build") == 0
+
