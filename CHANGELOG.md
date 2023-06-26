@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+
+**[3.1.0]**
 * Create a simpler stub by default.
 
 **[3.0.3]**
