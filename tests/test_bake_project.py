@@ -110,6 +110,10 @@ def assert_cli_not_enabled(output, bake_result):
     assert run_inside_dir('grep -v -q -i -r CLI11', str(bake_result.project_path)) == 0
     assert (b"Console support has not been activated!" in output)
 
+def assert_gtest_enabled(output, bake_result):
+    assert run_inside_dir('grep -q -i -r GTest::gtest_main', str(bake_result.project_path)) == 0
+    assert run_inside_dir('grep -q -i -r gtest_discover_tests', str(bake_result.project_path)) == 0
+    assert (b"GoogleTest unit testing framework activated!" in output)
 
 def test_year_compute_in_license_file(cookies):
     with bake_in_temp_dir(cookies) as result:
@@ -294,3 +298,11 @@ def test_bake_library_setup_with_no_logging_system_and_no_cli(cookies):
     assert_logger_not_enabled(output, result)
 
 
+def test_bake_library_setup_with_gtest(cookies):
+    context = {'unit_testing_framework': 'GoogleTest',
+               'library_setup': 'y'}
+    with bake_in_temp_dir(cookies, extra_context=context) as result:
+        assert result.project_path.is_dir()
+        output = build_and_test(result)
+        assert_library_setup(output, result)
+        assert_gtest_enabled(output, result)

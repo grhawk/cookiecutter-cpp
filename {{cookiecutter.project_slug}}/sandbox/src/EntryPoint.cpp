@@ -25,6 +25,12 @@ int main(int argc, char* argv[])
     std::string addToMessage = "Console support has not been activated!";
 
     {% endif -%}
+
+    {% if cookiecutter.unit_testing_framework == 'Catch2' %} std::cout << "Catch2 unit testing framework activated!" << std::endl;
+    {% endif -%}
+    {% if cookiecutter.unit_testing_framework == 'GoogleTest' %} std::cout << "GoogleTest unit testing framework activated!" << std::endl;
+    {% endif -%}
+
     auto* sandbox = new Sandbox();
     std::cout << sandbox->message() << std::endl;
     std::cout << addToMessage << std::endl;

@@ -11,5 +11,6 @@
   "create_author_file": "y",
   "open_source_license": ["MIT license", "BSD license", "ISC license", "Apache Software License 2.0", "GNU General Public License v3", "Not open source"],
   "logging_system": "y",
-  "library_setup": "n"
+  "library_setup": "n",
+  "unit_testing_framework": ["Catch2", "GoogleTest"]
 }
