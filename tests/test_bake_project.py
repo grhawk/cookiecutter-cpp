@@ -80,8 +80,13 @@ def build_and_test(result):
     return out
 
 
-def assert_simple_starter(output):
+def assert_simple_starter_setup(output):
     assert (b"Simple starter created!" in output)
+
+
+def assert_library_setup(output, result):
+    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project_path / "build")) == 0
+    assert (b"Simple starter created!" not in output)
 
 
 def assert_logger_enabled(output, bake_result=None):
@@ -131,7 +136,7 @@ def test_bake_and_run_tests(cookies):
         assert result.project_path.is_dir()
         output = build_and_test(result)
         print("test_bake_and_run_tests path", str(result.project_path))
-        assert_simple_starter(output)
+        assert_simple_starter_setup(output)
         assert_logger_enabled(output, result)
         assert_cli_enabled(output, result)
 
@@ -144,7 +149,7 @@ def test_bake_withspecialchars_and_run_tests(cookies):
     ) as result:
         assert result.project_path.is_dir()
         output = build_and_test(result)
-        assert_simple_starter(output)
+        assert_simple_starter_setup(output)
         assert_logger_enabled(output, result)
         assert_cli_enabled(output, result)
 
@@ -158,7 +163,7 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
     ) as result:
         assert result.project_path.is_dir()
         output = build_and_test(result)
-        assert_simple_starter(output)
+        assert_simple_starter_setup(output)
         assert_logger_enabled(output, result)
         assert_cli_enabled(output, result)
 
@@ -234,7 +239,7 @@ def test_bake_with_no_console_script(cookies):
     context = {'command_line_interface': "No command-line interface"}
     result = cookies.bake(extra_context=context)
     output = build_and_test(result)
-    assert_simple_starter(output)
+    assert_simple_starter_setup(output)
     assert_logger_enabled(output, result)
     assert_cli_not_enabled(output, result)
 
@@ -244,7 +249,7 @@ def test_bake_with_no_logging_system(cookies):
     context = {'logging_system': 'n'}
     result = cookies.bake(extra_context=context)
     output = build_and_test(result)
-    assert_simple_starter(output)
+    assert_simple_starter_setup(output)
     assert_logger_not_enabled(output, result)
     assert_cli_enabled(output, result)
 
@@ -254,7 +259,7 @@ def test_bake_with_no_logging_system_and_no_cli(cookies):
                'command_line_interface': "No command-line interface"}
     result = cookies.bake(extra_context=context)
     output = build_and_test(result)
-    assert_simple_starter(output)
+    assert_simple_starter_setup(output)
     assert_logger_not_enabled(output, result)
     assert_cli_not_enabled(output, result)
 
@@ -263,9 +268,10 @@ def test_bake_library_setup_and_run_tests(cookies):
     with bake_in_temp_dir(cookies,
                           extra_context=context) as result:
         assert result.project_path.is_dir()
-        build_and_test(result)
-        print("test_bake_and_run_tests path", str(result.project_path))
-        assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project_path / "build")) == 0
+        output = build_and_test(result)
+        assert_library_setup(output, result)
+        assert_logger_enabled(output, result)
+        assert_cli_enabled(output, result)
 
 
 def test_bake_library_setup_with_no_logging_system(cookies):
@@ -273,15 +279,18 @@ def test_bake_library_setup_with_no_logging_system(cookies):
                'library_setup': 'y'}
     result = cookies.bake(extra_context=context)
     output = build_and_test(result)
-    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project_path / "build")) == 0
+    assert_library_setup(output, result)
     assert_logger_not_enabled(output, result)
+    assert_cli_enabled(output, result)
 
-def test_bake_libary_setup_with_no_logging_system_and_no_cli(cookies):
+def test_bake_library_setup_with_no_logging_system_and_no_cli(cookies):
     context = {'logging_system': 'n',
                'command_line_interface': "No command-line interface",
                'library_setup': 'y'}
     result = cookies.bake(extra_context=context)
     output = build_and_test(result)
-    assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project_path / "build")) == 0
+    assert_library_setup(output, result)
     assert_cli_not_enabled(output, result)
     assert_logger_not_enabled(output, result)
+
+
