@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     logging::Log LOGGER = logging::Log();
     LOG_ERROR("example of logger");
    {% endif %}
-    {% if cookiecutter.command_line_interface == 'CLI11' %}std::string addToMessage = "It seems no console support has been activated!";
+    {% if cookiecutter.command_line_interface == 'CLI11' %}std::string addToMessage = "CLI11 Console support activated!";
 
     CLI::App cli{"App description"};
     cli.add_option("Add to message",
@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     CLI11_PARSE(cli, argc, argv);
 
     {% else -%}
-    std::string addToMessage = "It seems no console support has been activated!";
+    std::string addToMessage = "Console support has not been activated!";
 
     {% endif -%}
     auto* sandbox = new Sandbox();

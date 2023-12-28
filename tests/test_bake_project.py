@@ -59,19 +59,58 @@ def check_output_inside_dir(command, dirpath):
         return subprocess.check_output(shlex.split(command))
 
 
-def test_year_compute_in_license_file(cookies):
-    with bake_in_temp_dir(cookies) as result:
-        license_file_path = result.project.join('LICENSE')
-        now = datetime.datetime.now()
-        assert str(now.year) in license_file_path.read()
-
-
 def project_info(result):
     """Get toplevel dir, project_slug, and project dir from baked cookies"""
     project_path = str(result.project)
     project_slug = os.path.split(project_path)[-1]
     project_dir = os.path.join(project_path, project_slug)
     return project_path, project_slug, project_dir
+
+
+def build_and_test(result):
+    build_dir = str(result.project) + "/build"
+    #run_inside_dir("cat ./sandbox/src/EntryPoint.cpp", str(result.project))
+    assert run_inside_dir('mkdir build', str(result.project)) == 0
+    assert run_inside_dir('cmake ..', build_dir) == 0
+    assert run_inside_dir('cmake --build .', build_dir) == 0
+    assert run_inside_dir('./sandbox/tests/cpp_boilerplate-sandbox-test', build_dir) == 0
+    assert run_inside_dir('./sandbox/cpp_boilerplate-sandbox', build_dir) == 0
+    out = check_output_inside_dir('./sandbox/cpp_boilerplate-sandbox', build_dir)
+    print(b'#' + out + b'#')
+    return out
+
+
+def assert_simple_starter(output):
+    assert (b"Simple starter created!" in output)
+
+
+def assert_logger_enabled(output, bake_result=None):
+    assert run_inside_dir('grep -q -i -r spdlog', str(bake_result.project)) == 0
+    assert run_inside_dir('grep -q -i -r LOGGER', str(bake_result.project)) == 0
+    assert (b"(error) example of logger" in output)
+
+
+def assert_logger_not_enabled(output, bake_result=None):
+    assert run_inside_dir('grep -q -v -i -r spdlog', str(bake_result.project)) == 0
+    assert run_inside_dir('grep -q -v -i -r LOGGER', str(bake_result.project)) == 0
+    assert (b"(error) example of logger" not in output)
+
+
+def assert_cli_enabled(output, bake_result=None):
+    assert run_inside_dir('grep -q -i -r CLI11', str(bake_result.project)) == 0
+    assert (b"CLI11 Console support activated!" in output)
+
+
+def assert_cli_not_enabled(output, bake_result):
+    assert run_inside_dir('grep -v -q -i -r CLI11', str(bake_result.project)) == 0
+    assert (b"Console support has not been activated!" in output)
+
+
+def test_year_compute_in_license_file(cookies):
+    with bake_in_temp_dir(cookies) as result:
+        license_file_path = result.project.join('LICENSE')
+        now = datetime.datetime.now()
+        assert str(now.year) in license_file_path.read()
 
 
 def test_bake_with_defaults(cookies):
@@ -89,18 +128,11 @@ def test_bake_with_defaults(cookies):
 def test_bake_and_run_tests(cookies):
     with bake_in_temp_dir(cookies) as result:
         assert result.project.isdir()
-        build_and_test(result)
+        output = build_and_test(result)
         print("test_bake_and_run_tests path", str(result.project))
-
-
-def build_and_test(result):
-    build_dir = str(result.project) + "/build"
-    #run_inside_dir("cat ./sandbox/src/EntryPoint.cpp", str(result.project))
-    assert run_inside_dir('mkdir build', str(result.project)) == 0
-    assert run_inside_dir('cmake .. -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=cmake/conan_provider.cmake', build_dir) == 0
-    assert run_inside_dir('cmake --build .', build_dir) == 0
-    assert run_inside_dir('./sandbox/tests/cpp_boilerplate-sandbox-test', build_dir) == 0
-    assert run_inside_dir('./sandbox/cpp_boilerplate-sandbox', build_dir) == 0
+        assert_simple_starter(output)
+        assert_logger_enabled(output, result)
+        assert_cli_enabled(output, result)
 
 
 def test_bake_withspecialchars_and_run_tests(cookies):
@@ -110,7 +142,11 @@ def test_bake_withspecialchars_and_run_tests(cookies):
         extra_context={'full_name': 'name "quote" name'}
     ) as result:
         assert result.project.isdir()
-        build_and_test(result)
+        output = build_and_test(result)
+        assert_simple_starter(output)
+        assert_logger_enabled(output, result)
+        assert_cli_enabled(output, result)
+
 
 
 def test_bake_with_apostrophe_and_run_tests(cookies):
@@ -120,42 +156,10 @@ def test_bake_with_apostrophe_and_run_tests(cookies):
         extra_context={'full_name': "O'connor"}
     ) as result:
         assert result.project.isdir()
-        build_and_test(result)
-
-
-# def test_bake_and_run_travis_pypi_setup(cookies):
-#     # given:
-#     with bake_in_temp_dir(cookies) as result:
-#         project_path = str(result.project)
-#
-#         # when:
-#         travis_setup_cmd = ('python travis_pypi_setup.py'
-#                             ' --repo audreyr/cookiecutter-pypackage'
-#                             ' --password invalidpass')
-#         run_inside_dir(travis_setup_cmd, project_path)
-#         # then:
-#         result_travis_config = yaml.load(
-#             result.project.join(".travis.yml").open()
-#         )
-#         min_size_of_encrypted_password = 50
-#         assert len(
-#             result_travis_config["deploy"]["password"]["secure"]
-#         ) > min_size_of_encrypted_password
-
-
-# def test_bake_without_travis_pypi_setup(cookies):
-#     with bake_in_temp_dir(
-#         cookies,
-#         extra_context={'use_pypi_deployment_with_travis': 'n'}
-#     ) as result:
-#         result_travis_config = yaml.load(
-#             result.project.join(".travis.yml").open(),
-#             Loader=yaml.FullLoader
-#         )
-#         assert "deploy" not in result_travis_config
-#         assert "python" == result_travis_config["language"]
-#         # found_toplevel_files = [f.basename for f in result.project.listdir()]
-
+        output = build_and_test(result)
+        assert_simple_starter(output)
+        assert_logger_enabled(output, result)
+        assert_cli_enabled(output, result)
 
 def test_bake_without_author_file(cookies):
     with bake_in_temp_dir(
@@ -222,25 +226,31 @@ def test_bake_not_open_source(cookies):
 def test_bake_with_no_console_script(cookies):
     context = {'command_line_interface': "No command-line interface"}
     result = cookies.bake(extra_context=context)
-    assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
-    build_and_test(result)
+    output = build_and_test(result)
+    assert_simple_starter(output)
+    assert_logger_enabled(output, result)
+    assert_cli_not_enabled(output, result)
+
 
 
 def test_bake_with_no_logging_system(cookies):
     context = {'logging_system': 'n'}
     result = cookies.bake(extra_context=context)
-    assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
-    assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
-    build_and_test(result)
+    output = build_and_test(result)
+    assert_simple_starter(output)
+    assert_logger_not_enabled(output, result)
+    assert_cli_enabled(output, result)
+
 
 def test_bake_with_no_logging_system_and_no_cli(cookies):
     context = {'logging_system': 'n',
                'command_line_interface': "No command-line interface"}
     result = cookies.bake(extra_context=context)
-    assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
-    assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
     assert run_inside_dir('grep -v -i -r CLI11', str(result.project)) == 0
-    build_and_test(result)
+    output = build_and_test(result)
+    assert_simple_starter(output)
+    assert_logger_not_enabled(output, result)
+    assert_cli_not_enabled(output, result)
 
 def test_bake_library_setup_and_run_tests(cookies):
     context = {'library_setup': 'y'}
@@ -256,8 +266,6 @@ def test_bake_library_setup_with_no_logging_system(cookies):
     context = {'logging_system': 'n',
                'library_setup': 'y'}
     result = cookies.bake(extra_context=context)
-    assert run_inside_dir('grep -v -i -r spdlog', str(result.project)) == 0
-    assert run_inside_dir('grep -v -i -r LOGGER', str(result.project)) == 0
     build_and_test(result)
     assert run_inside_dir('./engine/tests/cpp_boilerplate-engine-test', str(result.project) + "/build") == 0
 

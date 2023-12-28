@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+    </content>
     <orderEntry type="jdk" jdkName="Python 3.9" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
@@ -10,6 +12,6 @@
     <option name="myDocStringFormat" value="Plain" />
   </component>
   <component name="SonarLintModuleSettings">
-    <option name="uniqueId" value="9f2e6db8-5574-4b5a-bc53-221e2d1b9b74" />
+    <option name="uniqueId" value="47ce41d4-3fc2-4e31-b2d7-2f10152aee67" />
   </component>
 </module>
