@@ -110,10 +110,31 @@ def assert_cli_not_enabled(output, bake_result):
     assert run_inside_dir('grep -v -q -i -r CLI11', str(bake_result.project_path)) == 0
     assert (b"Console support has not been activated!" in output)
 
-def assert_gtest_enabled(output, bake_result):
-    assert run_inside_dir('grep -q -i -r GTest::gtest_main', str(bake_result.project_path)) == 0
-    assert run_inside_dir('grep -q -i -r gtest_discover_tests', str(bake_result.project_path)) == 0
+def assert_gtest_enabled_library_setup(output, bake_result):
+    main_output = check_output_inside_dir('grep -i -r GTest::gtest_main', str(bake_result.project_path))
+    assert b"sandbox/tests/CMakeLists.txt" in main_output
+    assert b"engine/tests/CMakeLists.txt" in main_output
+    discover_tests_output = check_output_inside_dir('grep -i -r  gtest_discover_tests', str(bake_result.project_path))
+    assert b"sandbox/tests/CMakeLists.txt" in discover_tests_output
+    assert b"engine/tests/CMakeLists.txt" in discover_tests_output
+    include_output = check_output_inside_dir('grep -i -r #include<gtest/gtest.h>', str(bake_result.project_path))
+    assert b"sandbox/tests/test1.cpp" in include_output
+    assert b"engine/tests/test1.cpp" in include_output
+    assert run_inside_dir('grep -i -r gtest/cci', str(bake_result.project_path)) == 0
     assert (b"GoogleTest unit testing framework activated!" in output)
+
+def assert_catch2_enabled_library_setup(output, bake_result):
+    main_output = check_output_inside_dir('grep -i -r Catch2::Catch2WithMain', str(bake_result.project_path))
+    assert b"sandbox/tests/CMakeLists.txt" in main_output
+    assert b"engine/tests/CMakeLists.txt" in main_output
+    discover_tests_output = check_output_inside_dir('grep -i -r  catch_discover_tests', str(bake_result.project_path))
+    assert b"sandbox/tests/CMakeLists.txt" in discover_tests_output
+    assert b"engine/tests/CMakeLists.txt" in discover_tests_output
+    include_output = check_output_inside_dir('grep -i -r <catch2/catch_test_macros.hpp>', str(bake_result.project_path))
+    assert b"sandbox/tests/test1.cpp" in include_output
+    assert b"engine/tests/test1.cpp" in include_output
+    assert run_inside_dir('grep -i -r catch2/3.', str(bake_result.project_path)) == 0
+    assert (b"Catch2 unit testing framework activated!" in output)
 
 def test_year_compute_in_license_file(cookies):
     with bake_in_temp_dir(cookies) as result:
@@ -305,4 +326,13 @@ def test_bake_library_setup_with_gtest(cookies):
         assert result.project_path.is_dir()
         output = build_and_test(result)
         assert_library_setup(output, result)
-        assert_gtest_enabled(output, result)
+        assert_gtest_enabled_library_setup(output, result)
+
+def test_bake_library_setup_with_catch2(cookies):
+    context = {'unit_testing_framework': 'Catch2',
+               'library_setup': 'y'}
+    with bake_in_temp_dir(cookies, extra_context=context) as result:
+        assert result.project_path.is_dir()
+        output = build_and_test(result)
+        assert_library_setup(output, result)
+        assert_catch2_enabled_library_setup(output, result)
