@@ -71,7 +71,7 @@ def build_and_test(result):
     build_dir = result.project_path / "build"
     #run_inside_dir("cat ./sandbox/src/EntryPoint.cpp", str(result.project))
     assert run_inside_dir('mkdir build', str(result.project_path)) == 0
-    assert run_inside_dir('cmake ..', build_dir) == 0
+    assert run_inside_dir('cmake -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=cmake/conan_provider.cmake ..', build_dir) == 0
     assert run_inside_dir('cmake --build .', build_dir) == 0
     assert run_inside_dir('./sandbox/tests/cpp_boilerplate-sandbox-test', build_dir) == 0
     assert run_inside_dir('./sandbox/cpp_boilerplate-sandbox', build_dir) == 0
@@ -120,7 +120,7 @@ def assert_gtest_enabled_library_setup(output, bake_result):
     include_output = check_output_inside_dir('grep -i -r #include<gtest/gtest.h>', str(bake_result.project_path))
     assert b"sandbox/tests/test1.cpp" in include_output
     assert b"engine/tests/test1.cpp" in include_output
-    assert run_inside_dir('grep -i -r gtest/cci', str(bake_result.project_path)) == 0
+    assert run_inside_dir('grep -i -r gtest/', str(bake_result.project_path)) == 0
     assert (b"GoogleTest unit testing framework activated!" in output)
 
 def assert_catch2_enabled_library_setup(output, bake_result):

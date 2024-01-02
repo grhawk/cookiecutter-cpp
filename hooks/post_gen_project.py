@@ -58,6 +58,9 @@ if __name__ == '__main__':
     if '{{ cookiecutter.library_setup }}' == 'n':
         remove_folder('engine')
 
+    if '{{ cookiecutter.unit_testing_framework }}' != 'GoogleTest':
+        remove_file('cmake/gtest.cmake')
+
 
     subprocess.call(('git', 'init', '--initial-branch=main'))
     subprocess.call(('git', 'add', '.'))

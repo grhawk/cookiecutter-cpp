@@ -2,7 +2,11 @@
 # To keep your changes, remove these comment lines, but the plugin won't be able to modify your requirements
 
 requirements:
+  {%- if cookiecutter.unit_testing_framework == 'GoogleTest' %}
   - "gtest/1.14.0"
+  {%- elif cookiecutter.unit_testing_framework == 'Catch2' %}
+  - "catch2/3.5.1"
+  {%- endif -%}
   {%- if cookiecutter.logging_system == 'y' %}
   - "spdlog/1.12.0"
   {%- endif %}
