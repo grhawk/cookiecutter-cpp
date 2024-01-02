@@ -14,12 +14,6 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "This variable is needed by conan.cmake." FORCE)
 endif()
 
-list(APPEND dependencies
-        {% if cookiecutter.logging_system == 'y' -%}spdlog/1.11.0{% endif %}
-        {% if cookiecutter.command_line_interface == 'CLI11' -%}cli11/2.3.2{% endif %}
-        gtest/cci.20210126)
-
-include(cmake/conan2.cmake)
 include(cmake/gtest.cmake)
 
 {% if cookiecutter.library_setup == 'y' -%}add_subdirectory(engine){% endif %}
