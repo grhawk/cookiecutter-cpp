@@ -1,7 +1,0 @@
-[requires]
-{% if cookiecutter.logging_system == 'y' -%}spdlog/1.11.0{% endif %}
-{% if cookiecutter.command_line_interface == 'CLI11' -%}cli11/2.3.2{% endif %}
-gtest/cci.20210126
-
-[layout]
-cmake_layout
