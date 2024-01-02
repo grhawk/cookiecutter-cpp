@@ -7,7 +7,7 @@ this_folder = Path(__file__).parent
 setup(
     name='cookiecutter-cpp',
     packages=[],
-    version='3.1.0',
+    version='3.1.1',
     description='Cookiecutter template for C++ with several libs ready to be used.',
     long_description=(this_folder / 'README.rst').read_text(),
     long_description_content_type='text/x-rst',
