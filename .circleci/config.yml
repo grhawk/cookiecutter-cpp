@@ -75,7 +75,7 @@ workflows:
                     tags:
                         only: /^bump\/v\d+\.\d+\.\d+.*/
                     branches:
-                        ignore: /.*/
+                        only: main
     publish:   # This is gonna run just after the bump_version automatically.
         jobs:
             - test_pypi_publish:
