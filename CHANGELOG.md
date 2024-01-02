@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+* Using the new `conan_provider` approach to integrate conan into cmake.
+* Compatible with CLion.
 
 **[3.1.0]**
 * Create a simpler stub by default.
