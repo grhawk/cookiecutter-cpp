@@ -21,7 +21,8 @@ This is basically a fork of Cookiecutter_.
 Features
 --------
 
-* Managing dependencies with Conan_ and the CMake-Conan-Integration_. This allows to easily add dependencies directly into the CMakeList.txt file.
+* Managing dependencies with Conan_ and the CMake-Conan-Integration_. This allows to easily add dependencies directly into the conanfile.txt file.
+* Integration of Conan in CLion_.
 * No need to execute Conan_ commands (everything run with CMake).
 * Provide CLI11_ out-of-the-box (if requested).
 * Provide spdlog_ out-of-the-box (if requested).
@@ -49,10 +50,10 @@ Enter the newly generated folder. Make sure the Conan_ profile is configured::
     conan profile list
 
 If you don't have a Conan_ profile, you can create one with `conan profile detect --force`.
-At this point you can run::
+At this point, according to CMake-Conan-Integration_, you can run::
 
     mkdir build && cd build;
-    cmake ..
+    cmake -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=cmake/conan_provider.cmake ..
     cmake --build .
 
 This will prepare the needed C++ libraries and compile the example code.
@@ -117,6 +118,7 @@ Once a new branch has been merged, it is enough to create a new semver tag to ge
 .. _hdoc: https://hdoc.io/
 .. _CLI11: https://github.com/CLIUtils/CLI11
 .. _spdlog: https://github.com/gabime/spdlog
+.. _CLion: https://www.jetbrains.com/clion/
 
 .. _`Nekroze/cookiecutter-pypackage`: https://github.com/Nekroze/cookiecutter-pypackage
 .. _`tony/cookiecutter-pypackage-pythonic`: https://github.com/tony/cookiecutter-pypackage-pythonic
