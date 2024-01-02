@@ -1,12 +1,14 @@
-FROM ubuntu:focal
+FROM debian:bookworm-slim
 LABEL maintainer="Riccardo Petraglia" \
       description="Cookiecutter-cpp stuff for CircleCi repo." \
-      version="0.1.0"
+      version="0.1.1"
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Zurich
 RUN apt-get update -y && \
-    apt-get install -y tzdata
-RUN apt-get install -y --no-install-recommends\
+    apt-get upgrade -y && \
+    apt-get dist-upgrade -y && \
+    apt-get install -y --no-install-recommends\
+    tzdata \
                     git \
                     g++ \
                     build-essential \
@@ -19,6 +21,6 @@ RUN apt-get install -y --no-install-recommends\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY requirements_dev.txt /tmp
-RUN pip3 install -r /tmp/requirements_dev.txt
+RUN pip3 install -r /tmp/requirements_dev.txt --break-system-packages
 RUN conan profile detect --force
 
