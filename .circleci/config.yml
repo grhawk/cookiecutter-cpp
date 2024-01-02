@@ -58,6 +58,7 @@ jobs:
                       python setup.py sdist bdist_wheel
                       pip install pipenv
                       pipenv install twine
+                      TWINE_PASSWORD=${PYPI_PASSWORD}
                       pipenv run twine upload dist/*
 workflows:
     bump_version:
