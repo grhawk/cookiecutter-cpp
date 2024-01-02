@@ -21,8 +21,8 @@ This is basically a fork of Cookiecutter_.
 Features
 --------
 
-* Managing dependencies with Conan_ and the CMake-Conan-Integration_. This allows to easily add dependencies directly into the conanfile.txt file.
-* Integration of Conan in CLion_.
+* Managing dependencies with Conan_, the CMake-Conan-Integration_, and CLion_.
+* Integration with the Conan plugin of CLion_.
 * No need to execute Conan_ commands (everything run with CMake).
 * Provide CLI11_ out-of-the-box (if requested).
 * Provide spdlog_ out-of-the-box (if requested).
