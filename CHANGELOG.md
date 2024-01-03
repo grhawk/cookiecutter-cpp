@@ -8,6 +8,7 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+* Updated the documentation.
 
 **[3.2.0]**
 * Improved testing: tests are more robust and cover more cases.
