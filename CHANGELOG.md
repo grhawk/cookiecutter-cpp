@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+
+**[3.2.0]**
 * Improved testing: tests are more robust and cover more cases.
 * Added support for the Catch2 testing framework.
 
