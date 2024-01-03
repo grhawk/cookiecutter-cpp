@@ -11,9 +11,9 @@ TEST_CASE("sandbox.message() should always be `Hello!`", "[sandbox]"){
   Sandbox sandbox = Sandbox();
   {% if cookiecutter.logging_system == 'y' -%}LOG_INFO("Testing");{% endif %}
   {% if cookiecutter.library_setup == 'y' -%}
-      const char* expected_message = "Hello!";
+      std::string expected_message = "Hello!";
   {% else %}
-      const char* expected_message = "Simple starter created!";
+      std::string expected_message = "Simple starter created!";
   {% endif %}
   REQUIRE(sandbox.message() == expected_message);
 }
