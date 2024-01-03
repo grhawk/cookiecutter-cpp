@@ -14,7 +14,7 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "This variable is needed by conan.cmake." FORCE)
 endif()
 
-include(cmake/gtest.cmake)
+{% if cookiecutter.unit_testing_framework == 'GoogleTest' -%} include(cmake/gtest.cmake) {% endif %}
 
 {% if cookiecutter.library_setup == 'y' -%}add_subdirectory(engine){% endif %}
 add_subdirectory(sandbox)

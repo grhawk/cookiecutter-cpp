@@ -3,6 +3,7 @@ import os
 import shutil
 import subprocess
 from contextlib import contextmanager
+from pathlib import Path
 
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
@@ -31,6 +32,17 @@ def inside_dir(dirpath):
 
 if __name__ == '__main__':
 
+    test_folders = [
+        Path('engine/tests'),
+        Path('sandbox/tests')
+    ]
+    for test_folder in test_folders:
+        for folder in test_folder.iterdir():
+            if '{{ cookiecutter.unit_testing_framework }}' == folder.name:
+                for file in folder.iterdir():
+                    shutil.move(file, folder.parent)
+            shutil.rmtree(folder)
+
     if '{{ cookiecutter.create_author_file }}' != 'y':
         remove_file('AUTHORS.rst')
 
@@ -45,6 +57,9 @@ if __name__ == '__main__':
 
     if '{{ cookiecutter.library_setup }}' == 'n':
         remove_folder('engine')
+
+    if '{{ cookiecutter.unit_testing_framework }}' != 'GoogleTest':
+        remove_file('cmake/gtest.cmake')
 
 
     subprocess.call(('git', 'init', '--initial-branch=main'))
