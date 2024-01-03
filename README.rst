@@ -24,6 +24,7 @@ Features
 * Managing dependencies with Conan_, the CMake-Conan-Integration_, and CLion_.
 * Integration with the Conan plugin of CLion_.
 * No need to execute Conan_ commands (everything run with CMake).
+* Provide the possibility to choose between the unit test framework Catch2_ and GoogleTest_.
 * Provide CLI11_ out-of-the-box (if requested).
 * Provide spdlog_ out-of-the-box (if requested).
 * Circleci_: Ready for Circleci Continuous Integration testing
@@ -119,6 +120,8 @@ Once a new branch has been merged, it is enough to create a new semver tag to ge
 .. _CLI11: https://github.com/CLIUtils/CLI11
 .. _spdlog: https://github.com/gabime/spdlog
 .. _CLion: https://www.jetbrains.com/clion/
+.. _Catch2: https://github.com/catchorg/Catch2
+.. _GoogleTest: https://github.com/google/googletest
 
 .. _`Nekroze/cookiecutter-pypackage`: https://github.com/Nekroze/cookiecutter-pypackage
 .. _`tony/cookiecutter-pypackage-pythonic`: https://github.com/tony/cookiecutter-pypackage-pythonic
