@@ -8,6 +8,8 @@ version tag at releasing time.
 Versioning
 ----------
 **[Unreleased]**
+
+**[3.2.1]**
 * Updated the documentation.
 
 **[3.2.0]**
